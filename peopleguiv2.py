@@ -6,6 +6,9 @@ import shelve
 class App:
 
     def __init__(self, master):
+        # we use this var in our closeApp method
+        self.master = master
+
         # frame for our entries and labels
         form = Frame(master)
         form.pack(side=RIGHT)
@@ -29,7 +32,7 @@ class App:
         self.update_btn = Button(master, text="Update", command=self.updateRecord).pack(side=LEFT)
         self.clear_btn = Button(master, text="Clear", command=self.clearInput).pack(side=LEFT)
         self.delete_btn = Button(master, text="Remove", command=self.deleteKey).pack(side=LEFT)
-        self.quit_btn = Button(master, text="Quit", command=master.quit).pack(side=RIGHT)
+        self.quit_btn = Button(master, text="Quit", command=self.closeApp).pack(side=RIGHT)
 
     def showKeys(self):
         lst = '\n'.join([k for k in sorted(list(self.db.keys()))])
@@ -46,7 +49,7 @@ class App:
         if askyesno(title='Warning', message=warning):
             try:
                 del self.db[key]
-                self.clearInput()
+                App.clearInput(self)
                 showinfo(title='Deleted', message='Key removed successfully')
             except KeyError:
                 showinfo(title='Error', message='Key does not exist')
@@ -89,9 +92,11 @@ class App:
         else:
             pass
 
+    def closeApp(self):
+        self.db.close()
+        self.master.quit()
 
 root = Tk()
 root.title('People Shelve')
 app = App(root)
 root.mainloop()
-app.db.close()
