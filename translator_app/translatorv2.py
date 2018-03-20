@@ -7,6 +7,7 @@ import requests
 import sqlite3
 import os
 
+# The Frame held in separate tabs of the main programs notebook
 class LanguageTab(tk.Frame):
     def __init__(self, master, lang_name, lang_code):
         super().__init__(master)
@@ -31,6 +32,7 @@ class LanguageTab(tk.Frame):
         root.clipboard_append(self.translation_var.get())
         msg.showinfo("Copied Successfully", "Text copied to clipboard")
 
+# The main interface for our program
 class TranslateBook(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -38,6 +40,7 @@ class TranslateBook(tk.Tk):
         self.title("Translation Book")
         self.geometry("500x300")
 
+        # Menu for the interface
         self.menu = tk.Menu(self, bg="lightgrey", fg="black")
 
         self.languages_menu = tk.Menu(self.menu, tearoff=0, bg="lightgrey", fg="black")
@@ -48,7 +51,8 @@ class TranslateBook(tk.Tk):
         # The default language.
         self.languages_menu.add_command(label="Filipino", command=lambda: self.
                                         add_new_language(LanguageTab(self, "Filipino", "tl")))
-
+        
+        # Trying to figure why I called this the remove_menu
         self.remove_menu = tk.Menu(self.menu, tearoff=0, bg="lightgrey", fg="black")
 
         # Configure the languages_menu to be a drop-down menu
@@ -57,6 +61,7 @@ class TranslateBook(tk.Tk):
 
         self.config(menu=self.menu)
 
+        # Notebook is responsible for providing tabs-like interface in the program
         self.notebook = Notebook(self)
 
         self.language_tabs = {}
@@ -76,6 +81,7 @@ class TranslateBook(tk.Tk):
 
         self.bind("<Return>", self.translate)
 
+        # If we have a previous session, this should load it
         saved_tabs = self.load_tabs()
         for row in saved_tabs:
             lang, code = row
@@ -114,7 +120,10 @@ class TranslateBook(tk.Tk):
 
     def show_new_language_popup(self):
         NewLanguageForm(self)
-
+    
+    # This method builds a request query from the language, code, and text to be translated
+    # If without error, retrieves the response which is a translation created by google's api
+    # The translation is then inserted into the appropriate LanguageTab
     def translate(self, text=None, event=None):
         if len(self.language_tabs) < 1:
             msg.showerror("No Languages", "No languages added. Please add some from the menu")
