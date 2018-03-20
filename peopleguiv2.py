@@ -1,7 +1,12 @@
+''' Basic tkinter-based GUI program that fetches records from a database via python's shelve module.
+    
+    All records are stored in a 'Person' object which has basic fields such as name, age, job, and pay.
+    The GUI supports fetching, updating, deleting and storing and adding records to the database.
+'''
+
 from tkinter import *
 from tkinter.messagebox import showerror, showinfo, askyesno
 import shelve
-
 
 class App:
 
