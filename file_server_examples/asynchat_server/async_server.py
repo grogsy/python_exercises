@@ -1,4 +1,17 @@
 # An asynchronous HTTP server using asynchat
+# How it works:
+#               - While the server is listening
+#                 clients can request sessions to the server
+#                 via webbrowser in order to access files
+#                 To test on a local machine type into browser:
+#                    http://localhost:8080/<file_name>/
+#
+#                 To test from a local network:
+#                    http://<private_network_ip>:8080/<file_name>/
+#
+# Of course you can change the port number to suit your use case.
+# script is from the example provided by David Beazley's "Python Essentials" book
+
 
 import asynchat, asyncore, socket
 import os
@@ -13,6 +26,7 @@ except ImportError:
 class async_http(asyncore.dispatcher):
 
     def __init__(self, port):
+        # initialize the server to listen in for clients
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         self.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -20,6 +34,7 @@ class async_http(asyncore.dispatcher):
         self.listen(5)
 
     def handle_accept(self):
+        # send incoming connections to the custom handler
         client, addr = self.accept()
         print("Connected: %s " % str(addr))
         return async_http_handler(client)
@@ -32,7 +47,7 @@ class async_http_handler(asynchat.async_chat):
         self.got_header = False
         self.set_terminator(b"\r\n\r\n")
 
-    # Get incoming data and append to data buffer
+    # Get incoming data from the client and append to data buffer
     def collect_incoming_data(self, data):
         if not self.got_header:
             self.data.append(data)
@@ -59,12 +74,21 @@ class async_http_handler(asynchat.async_chat):
             if not os.path.exists(url):
                 self.send_error(404, "File %s not found\r\n" % url)
             else:
+                # get metadata about the file(file extension and size)
                 type, encoding = mimetypes.guess_type(url)
                 size = os.path.getsize(url)
+                
+                # build the HTTP response to send back to the client
                 self.push_text("HTTP/1.0 200 OK\r\n")
                 self.push_text("Content-length: %s\r\n" % size)
                 self.push_text("Content-type: %s\r\n" % type)
                 self.push_text("\r\n")
+                
+                # the method responsible for building the requested file,
+                # push_with_producer is a built-in method
+                # inherited from the async_chat class that requires
+                # a file producing method or class to work with
+                # we use a class in this case
                 self.push_with_producer(file_producer(url))
         else:
             self.send_error(501, "%s method not implemented" % op)
@@ -77,13 +101,19 @@ class async_http_handler(asynchat.async_chat):
         self.push_text("\r\n")
         self.push_text(message)
 
+# class responsible for building the file requested from the client
 class file_producer(object):
     def __init__(self, filename, buffer_size=512):
         self.f = open(filename, "rb")
         self.buffer_size = buffer_size
 
     def more(self):
+        # using asynchat's push_with_producer method requires 
+        # the file producing object to define a 'more' method
+        # in order to build the file properly
+        
         data = self.f.read(self.buffer_size)
+        
         if not data:
             self.f.close()
         return data
