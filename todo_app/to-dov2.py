@@ -63,7 +63,7 @@ class Todo(tk.Tk):
             }
         ]
 
-        # Load tasks from database
+        # Load tasks from database (if they exist)
         saved_tasks = self.load_tasks()
         for task in saved_tasks:
             task_text = task[0]
