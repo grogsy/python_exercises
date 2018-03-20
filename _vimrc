@@ -30,6 +30,7 @@ set foldlevel=99
 nnoremap <space> za
 
 "Add all plugins here
+"To config type: :PluginInstall at normal mode
 Plugin 'tmhedberg/SimpylFold'
 let g:SimplyFold_docstring_preview=1
 
