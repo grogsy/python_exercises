@@ -16,6 +16,7 @@ set splitbelow
 set splitright
 
 "split navigations
+"uses ctrl+vimmovekey to switch between split buffers
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -41,7 +42,7 @@ Plugin 'nvie/vim-flake8'
 let python_highlight_all=1
 syntax on
 
-
+"File tree plugin for vim
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 
@@ -49,7 +50,7 @@ Plugin 'jistr/vim-nerdtree-tabs'
 "hit ctrl-p to search for things
 Plugin 'kien/ctrlp.vim'
 
-
+"Doesn't work for me for some reason
 "Bundle 'Valloric/YouCompleteMe'
 "let g:ycm_autoclose_preview_window_after_completion=1
 "map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
