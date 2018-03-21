@@ -8,7 +8,10 @@ import sqlite3
 import os
 
 # The Frame held in separate tabs of the main programs notebook
+
+
 class LanguageTab(tk.Frame):
+
     def __init__(self, master, lang_name, lang_code):
         super().__init__(master)
 
@@ -33,6 +36,8 @@ class LanguageTab(tk.Frame):
         msg.showinfo("Copied Successfully", "Text copied to clipboard")
 
 # The main interface for our program
+
+
 class TranslateBook(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -47,11 +52,11 @@ class TranslateBook(tk.Tk):
 
         self.languages_menu.add_command(label="Add New", command=self.
                                         show_new_language_popup)
-        
+
         # The default language.
         self.languages_menu.add_command(label="Filipino", command=lambda: self.
                                         add_new_language(LanguageTab(self, "Filipino", "tl")))
-        
+
         # Trying to figure why I called this the remove_menu
         self.remove_menu = tk.Menu(self.menu, tearoff=0, bg="lightgrey", fg="black")
 
@@ -64,6 +69,10 @@ class TranslateBook(tk.Tk):
         # Notebook is responsible for providing tabs-like interface in the program
         self.notebook = Notebook(self)
 
+        # running list for languages in the menu bar
+        self.menu_tabs = []
+
+        # running list for languages which currently have an active tab open
         self.language_tabs = {}
 
         english_tab = tk.Frame(self.notebook)
@@ -88,6 +97,7 @@ class TranslateBook(tk.Tk):
             tab = LanguageTab(self, lang, code)
             self.languages_menu.add_command(label=lang, command=lambda: self.
                                             add_new_language(tab, from_db=True))
+            self.menu_tabs.append(lang)
 
     def add_new_language(self, language, from_db=False):
         self.language_tabs[language.lang_name] = language
@@ -95,6 +105,7 @@ class TranslateBook(tk.Tk):
         self.notebook.add(language, text=language.lang_name)
         self.remove_menu.add_command(label=language.lang_name, command=lambda: self.
                                      remove_language(language))
+        self.menu_tabs.remove(language.lang_name)
         if not from_db:
             self.save_tab_info(label=language.lang_name, code=language.lang_code)
         try:
@@ -109,7 +120,7 @@ class TranslateBook(tk.Tk):
             self.remove_menu.delete(language.lang_name)
 
             delete_label = "DELETE FROM tabs where language=?"
-            delete_code  = "DELETE FROM tabs where code=?"
+            delete_code = "DELETE FROM tabs where code=?"
             self.run_query(delete_label, (language.lang_name,))
             self.run_query(delete_code, (language.lang_code,))
 
@@ -119,8 +130,9 @@ class TranslateBook(tk.Tk):
             pass
 
     def show_new_language_popup(self):
+        # raise the languague form to place information for a new lang tab
         NewLanguageForm(self)
-    
+
     # This method builds a request query from the language, code, and text to be translated
     # If without error, retrieves the response which is a translation created by google's api
     # The translation is then inserted into the appropriate LanguageTab
@@ -176,10 +188,12 @@ class TranslateBook(tk.Tk):
 
         return tabs
 
+
 class NewLanguageForm(tk.Toplevel):
     def __init__(self, master):
         super().__init__()
 
+        # 'master' is the TranslateBook instance which references this pop-up form
         self.master = master
 
         self.title("Add new Language")
@@ -205,11 +219,15 @@ class NewLanguageForm(tk.Toplevel):
         lang_code = self.code_entry.get()
 
         if lang_name and lang_code:
-            new_tab = LanguageTab(self.master, lang_name, lang_code)
-            self.master.languages_menu.add_command(label=lang_name, command=lambda: self.
-                                                   master.add_new_language(new_tab))
-            msg.showinfo("Language Option Added", "Language option " + lang_name + " added to menu")
-            self.destroy()
+            if lang_name in self.master.menu_tabs:
+                msg.showerror("Language is already in the menu.")
+            else:
+                new_tab = LanguageTab(self.master, lang_name, lang_code)
+                self.master.languages_menu.add_command(label=lang_name, command=lambda: self.
+                                                       master.add_new_language(new_tab))
+                msg.showinfo("Language Option Added", "Language option " + lang_name + " added to menu")
+                self.master.menu_tabs.append(lang_name)
+                self.destroy()
         else:
             msg.showerror("Missing Information", "Please add both a name and code")
 
@@ -219,4 +237,3 @@ if __name__ == "__main__":
         TranslateBook.create_session()
     t = TranslateBook()
     t.mainloop()
-
