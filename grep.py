@@ -25,29 +25,35 @@ parser.add_argument('-l', '--lines', dest='show_lines',
                     action='store_true',
                     help='Give this argument to show what line number pattern occurs in')
 
-args = parser.parse_args()
 
-# args.pattern returns a list even its one item, so
-pattern = re.compile(args.pattern[0])
+def search(file, pattern, show_lines=False):
 
-for file in args.files:
+    re_pattern = re.compile(pattern)
 
     if file not in os.listdir():
         print("File {} does not exist in this directory".format(file))
-        continue
+        return
 
     with open(file, 'r') as current_file:
         contents = current_file.readlines()
-        if args.show_lines:
-            matches = [str(line_num + 1) + " " + line for line_num, line in enumerate(contents) if pattern.search(line)]
+        if show_lines:
+            matches = [str(line_num + 1) + ": " + line for line_num, line in enumerate(contents) if re_pattern.search(line)]
         else:
-            matches = [line for line in contents if pattern.search(line)]
+            matches = [line for line in contents if re_pattern.search(line)]
 
         if not matches:
-            print("No matches of <{}> occured for {}".format(args.pattern[0], file))
-            continue
+            print("No matches of <{}> occured for file {}".format(pattern, file))
+            return
 
-        print("{} lines contain pattern <{}> in {}:\n".format(len(matches), args.pattern[0], file))
+        print("{} lines contain pattern <{}> in {}:\n".format(len(matches), pattern, file))
 
         for line in matches:
             print(line)
+
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+    pattern = args.pattern[0]
+
+    for file in args.files:
+        search(file, pattern, args.show_lines)
