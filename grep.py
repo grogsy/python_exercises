@@ -2,9 +2,8 @@
 #
 # works like so :
 # grep <files to search> <pattern> <other opts>
-# exactly in this order or for some reason the program will break
-# i might just make files to search resolve to a destination variable
-# in order to work around this
+# for some reason the file to be searched needs to go first
+# or the program won't work
 #
 # returns :
 # <num> matches found for <pattern> in <file>
