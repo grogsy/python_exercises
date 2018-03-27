@@ -6,7 +6,7 @@
 # or the program won't work
 #
 # returns :
-# <num> matches found for <pattern> in <file>
+# <num> lines contain <pattern> in <file>
 # etc
 
 import argparse
