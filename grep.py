@@ -2,11 +2,12 @@
 #
 # works like so :
 # grep <files to search> <pattern> <other opts>
-# for some reason the file to be searched needs to go first
-# or the program won't work
+# exactly in this order or for some reason the program will break
+# i might just make files to search resolve to a destination variable
+# in order to work around this
 #
 # returns :
-# <num> lines contain <pattern> in <file>
+# <num> matches found for <pattern> in <file>
 # etc
 
 import argparse
@@ -36,18 +37,13 @@ def search(file, pattern, show_lines=False):
     with open(file, 'r') as current_file:
         contents = current_file.readlines()
         if show_lines:
-            matches = [str(line_num + 1) + ": " + line for line_num, line in enumerate(contents) if re_pattern.search(line)]
+            # to yield/return a generator expression
+            matches = (str(line_num + 1) + ": " + line for line_num, line in enumerate(contents) if re_pattern.search(line))
         else:
-            matches = [line for line in contents if re_pattern.search(line)]
+            matches = (line for line in contents if re_pattern.search(line))
 
-        if not matches:
-            print("No matches of <{}> occured for file {}".format(pattern, file))
-            return
-
-        print("{} lines contain pattern <{}> in {}:\n".format(len(matches), pattern, file))
-
-        for line in matches:
-            print(line)
+        return matches
+        # print("{} lines contain pattern <{}> in {}:\n".format(len(matches), pattern, file))
 
 
 if __name__ == '__main__':
@@ -55,4 +51,4 @@ if __name__ == '__main__':
     pattern = args.pattern[0]
 
     for file in args.files:
-        search(file, pattern, args.show_lines)
+        print('\n'.join(result for result in search(file, pattern, args.show_lines)))
