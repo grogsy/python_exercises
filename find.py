@@ -48,7 +48,6 @@ def generate_sub_greps(matches, sub_grep):
 if __name__ == '__main__':
 
     args = parser.parse_args()
-    print(args)
 
     path = args.arg_path
     pattern = args.pattern
