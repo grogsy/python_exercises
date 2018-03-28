@@ -46,8 +46,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     f = open(args.file, 'r').readlines()
+    
+    if len(args.fields.split('-')) > 2:
+        exit('-f requires only 2 args: a lower bound and an upper bound')
 
-    if args.delim:
-        process_file(f, args.fields, delimiter=args.delim)
-    else:
-        process_file(f, args.fields)
+    
+    process_file(f, args.fields, delimiter=args.delim)
+    
