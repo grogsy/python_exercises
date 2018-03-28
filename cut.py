@@ -1,4 +1,5 @@
 # shoddy cut mimic needs work
+# example: can't parse whitespace(e.g. ' ') as a delimiter..
 
 import argparse
 
