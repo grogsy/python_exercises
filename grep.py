@@ -23,8 +23,8 @@ def search(file, pattern, show_lines=False):
     re_pattern = re.compile(pattern)
 
     if file not in os.listdir():
-        print("File {} does not exist in this directory".format(file))
-        return
+        return "File {} does not exist in this directory".format(file)
+        
 
     with open(file, 'r') as current_file:
         contents = current_file.readlines()
