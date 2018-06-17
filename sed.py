@@ -16,7 +16,7 @@ def parse_args():
 
 
 def re_replace(txt, pattern, target):
-    return '\n'.join(re.sub(pattern, target, line) for line in text)
+    return '\n'.join(re.sub(pattern, target, line) for line in txt)
 
 
 def str_replace(txt, sub, target):
@@ -33,7 +33,7 @@ if __name__=='__main__':
         exit("Can't substitute using both regex and literal string")
 
     for file in files:
-        with open(file, 'r') as cur:
+        with open(file, 'w+') as cur:
             txt = cur.readlines()
             if args['s']:
                 sub = args['s']
