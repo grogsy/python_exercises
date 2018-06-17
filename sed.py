@@ -41,5 +41,5 @@ if __name__=='__main__':
             elif args['e']:
                 pattern = re.compile(args['e'])
                 txt = re_replace(txt, pattern, target)
-            print(txt)
+            cur.write(txt)
             
