@@ -19,7 +19,7 @@ def re_replace(txt, pattern, target):
     return '\n'.join(re.sub(pattern, target, line) for line in text)
 
 
-def str_replace(txt, sub, target):
+def str_replace(txt, target, sub):
     return '\n'.join(line.replace(target, sub) for line in txt)
 
 
@@ -38,7 +38,7 @@ if __name__=='__main__':
             cur.seek(0)
             if args['s']:
                 sub = args['s']
-                txt = str_replace(txt, sub, target)
+                txt = str_replace(txt, target, sub)
             elif args['e']:
                 pattern = re.compile(args['e'])
                 txt = re_replace(txt, pattern, target)
