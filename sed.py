@@ -16,7 +16,7 @@ def parse_args():
 
 
 def re_replace(txt, pattern, target):
-    return '\n'.join(re.sub(pattern, target, line) for line in text)
+    return '\n'.join(re.sub(pattern, target, line) for line in txt)
 
 
 def str_replace(txt, target, sub):
