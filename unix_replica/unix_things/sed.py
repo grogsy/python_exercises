@@ -12,20 +12,16 @@ def parse_args():
     return parser.parse_args()
 
 
-def re_replace(txt, new_exp, old_exp):
-    return '\n'.join(old_exp.sub(new_exp, line) for line in txt)
-
-
 def main(args):
-    target = re.compile(args['s'])
-    replacement  = args['g']
+    old_exp = re.compile(args['s'])
+    new_exp = args['g']
 
     with open(args['file'], 'r+') as f:
         txt = f.readlines()
         # clean txt list of any excess/stray new-lines
         txt = [line.strip('\n') for line in txt]
         txt = [line for line in txt if line]
-        txt = re_replace(txt, replacement, target)
+        txt = '\n'.join(old_exp.sub(new_exp, line) for line in txt)
         if args['w']:
             f.seek(0)
             f.write(txt)
