@@ -11,8 +11,7 @@ def parse_args():
 
 
 def main(args):
-    txt = open(args['file'], 'r').readlines()
-    txt = [line.strip('\n') for line in txt]
+    txt = [line.strip('\n') for line in open(args['file'], 'r').readlines()]
     if args['s']:
         txt = [line for line in txt if line]
     if args['n']:
