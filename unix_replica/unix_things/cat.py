@@ -5,6 +5,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('file')
     parser.add_argument('-n', action='store_true', help='print line numbers')
+    parser.add_argument('-s', action='store_true', help='squeeze black lines')
 
     return parser.parse_args()
 
@@ -12,6 +13,8 @@ def parse_args():
 def main(args):
     txt = open(args['file'], 'r').readlines()
     txt = [line.strip('\n') for line in txt]
+    if args['s']:
+        txt = [line for line in txt if line]
     if args['n']:
         fmt = '{0:>{w}} {1}'
         new_txt = list(enumerate(txt, start=1))
