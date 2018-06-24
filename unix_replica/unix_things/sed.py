@@ -17,9 +17,8 @@ def main(args):
     new_exp = args['g']
 
     with open(args['file'], 'r+') as f:
-        txt = f.readlines()
+        txt = [line.strip('\n') for line in f.readlines()]
         # clean txt list of any excess/stray new-lines
-        txt = [line.strip('\n') for line in txt]
         txt = [line for line in txt if line]
         txt = '\n'.join(old_exp.sub(new_exp, line) for line in txt)
         if args['w']:
