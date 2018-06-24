@@ -11,9 +11,10 @@ def parse_args():
 
 def main(args):
     txt = open(args['file'], 'r').readlines()
+    txt = [line.strip('\n') for line in txt]
     if args['n']:
         fmt = '{0:>{w}} {1}'
-        new_txt = enumerate(txt, start=1)
+        new_txt = list(enumerate(txt, start=1))
         num_width = len(str(max((num for num, _ in new_txt))))
         new_txt = [fmt.format(num, line, w=num_width) for num, line in new_txt]
         sys.stdout.write('\n'.join(new_txt))
