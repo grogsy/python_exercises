@@ -5,7 +5,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('file')
     parser.add_argument('-n', action='store_true', help='print line numbers')
-    parser.add_argument('-s', action='store_true', help='squeeze black lines')
+    parser.add_argument('-s', action='store_true', help='squeeze blank lines')
 
     return parser.parse_args()
 
