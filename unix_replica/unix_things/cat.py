@@ -16,8 +16,7 @@ def main(args):
         fmt = '{0:>{w}} {1}'
         new_txt = list(enumerate(txt, start=1))
         num_width = len(str(max((num for num, _ in new_txt))))
-        new_txt = [fmt.format(num, line, w=num_width) for num, line in new_txt]
-        sys.stdout.write('\n'.join(new_txt))
+        sys.stdout.write('\n'.join(fmt.format(num, line, w=num_width) for num, line in new_txt))
     else:
         sys.stdout.write('\n'.join(line for line in txt))
 
