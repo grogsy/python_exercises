@@ -19,7 +19,7 @@ def main(args):
     txt = [line.strip('\n') for line in open(args['file'], 'r').readlines()]
     if args['n']:
         ntmp = list(enumerate(txt, start=1))
-        fmt = '{0:>w}} {1}'
+        fmt = '{0:>{w}} {1}'
         padding_width = len(str(max((num for num, _ in ntmp))))
         txt = [fmt.format(num, line, w=padding_width) for num, line in ntmp]
 
