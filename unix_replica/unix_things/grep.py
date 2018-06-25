@@ -7,7 +7,7 @@ def parse_args():
     parser.add_argument('file', type=str)
     parser.add_argument('-e', type=str, help='regex pattern')
     parser.add_argument('-i', action='store_true', help='ignore case')
-    parser.add_argument('-v', action='store_true', help='invert matching(get non-matching lines')
+    parser.add_argument('-v', action='store_true', help='invert matching(get non-matching lines)')
     parser.add_argument('-c', action='store_true', help='instead of printing matches, print match count instead')
     parser.add_argument('-n', action='store_true', help='prefix each line with a line number')
     parser.add_argument('-m', type=int, help='get the first n occurences of a match')
