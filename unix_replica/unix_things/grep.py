@@ -35,7 +35,7 @@ def main(args):
         filtered_txt = filtered_txt[:args['m']]
 
     if args['c']:
-        sys.stdout.write(len(filtered_txt))
+        sys.stdout.write(str(len(filtered_txt)))
     else:
         sys.stdout.write('\n'.join(filtered_txt))
 
