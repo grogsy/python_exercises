@@ -11,6 +11,7 @@ def parse_args():
     parser.add_argument('-c', action='store_true', help='instead of printing matches, print match count instead')
     parser.add_argument('-n', action='store_true', help='prefix each line with a line number')
     parser.add_argument('-m', type=int, help='get the first n occurences of a match')
+    parser.add_argument('-m--last', type=int, help='like -m but last n occurences counting backward')
 
     return parser.parse_args()
 
@@ -33,6 +34,10 @@ def main(args):
 
     if args['m']:
         filtered_txt = filtered_txt[:args['m']]
+    elif args['m__last']:
+        i = args['m__last']
+        index = -i if i > 0 else i
+        filtered_txt = filtered_txt[index:]
 
     if args['c']:
         sys.stdout.write(str(len(filtered_txt)))
