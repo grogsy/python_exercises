@@ -10,16 +10,16 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='unix find')
-    parser.add_argument('-cd', type=str, help='directory to search(default is cwd)')
+    parser.add_argument('-cd', type=str, metavar='<DIR>', help='directory to search(default is cwd)')
     parser.add_argument('-L', action='store_true', help='Follow symbolic links(get abs path)')
-    parser.add_argument('-name', type=str, help='get matches with the specified (regex) pattern')
+    parser.add_argument('-name', type=str, metavar='<pattern>', help='get matches with the specified (regex) pattern')
     parser.add_argument('-print', action='store_true', help='display results')
     parser.add_argument('-empty', action='store_true', help='get matches that are either empty or a directory')
     parser.add_argument('-readable', action='store_true', help='get matches that are readable by the current user')
     parser.add_argument('-executable', action='store_true', help='same as -readable but checks for x-permision')
     parser.add_argument('-writable', action='store_true', help='same as -readable but checks for w-permission')
-    parser.add_argument('-samefile', type=str, help='get matches which have the same inode as <name>')
-    parser.add_argument('-size', type=int, help='get matches that have n size')
+    parser.add_argument('-samefile', type=str, metavar='<name>', help='get matches which have the same inode as <name>')
+    parser.add_argument('-size', type=int, metavar='<n>', help='get matches that have <n> size')
 
     return parser.parse_args()
 
@@ -40,10 +40,10 @@ def main(args):
     if args['executable']:
         res = [link for link in res if os.access(link, os.X_OK)]
 
-    # Check other stats
+    # Check other stats. Other find opts that need implementation: amin, anewer, atime, cmin, cnewer, ctime, gid, mmin, mtime, newer, path
+    # Check man find just to make sure if I missed anything else
     if args['size']:
         res = [link for link in res if os.stat(link).st_size == args['size']]
-
     if args['samefile']:
         res = [link for link in res if os.stat(link).st_ino == os.stat(args['samefile']).st_ino]
     if args['empty']:

@@ -5,13 +5,13 @@ import sys
 def parse_args():
     parser = argparse.ArgumentParser(description='unix grep')
     parser.add_argument('file', type=str)
-    parser.add_argument('-e', type=str, help='regex pattern')
+    parser.add_argument('-e', type=str, metavar='<pattern>', help='regex pattern')
     parser.add_argument('-i', action='store_true', help='ignore case')
     parser.add_argument('-v', action='store_true', help='invert matching(get non-matching lines)')
     parser.add_argument('-c', action='store_true', help='instead of getting matches, get the match count')
     parser.add_argument('-n', action='store_true', help='prefix each line with a line number')
-    parser.add_argument('-m', type=int, help='get the first n occurences of a match')
-    parser.add_argument('-m--last', type=int, help='like -m but last n occurences')
+    parser.add_argument('-m', type=int, metavar='<N>', help='get the first N occurences of a match')
+    parser.add_argument('-m--last', type=int, metavar='<N>', help='like -m but last N occurences')
 
     return parser.parse_args()
 

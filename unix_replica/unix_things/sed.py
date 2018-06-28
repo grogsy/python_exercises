@@ -6,8 +6,8 @@ import sys
 def parse_args():
     parser = argparse.ArgumentParser(description='bare implementation of unix sed')
     parser.add_argument('file', type=str)
-    parser.add_argument('-s', type=str, help='search string or regex to replace')
-    parser.add_argument('-g', type=str, help='replacement expression')
+    parser.add_argument('-s', type=str, metavar='<OLD>', help='search string or regex to replace')
+    parser.add_argument('-g', type=str, metavar='<NEW>', help='replacement expression')
     parser.add_argument('-w', action='store_true', help='write change to current file')
     parser.add_argument('-i', action='store_true', help='case-insensitive')
     return parser.parse_args()
