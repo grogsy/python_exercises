@@ -5,7 +5,9 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('file')
     parser.add_argument('-n', action='store_true', help='print line numbers')
-    parser.add_argument('-s', action='store_true', help='squeeze blank lines')
+    parser.add_argument('-s', action='store_true', help='squeeze black lines')
+    parser.add_argument('-E', action='store_true', help='denote eol with "$"')
+    parser.add_argument('-T', action='store_true', help='denote tabs(\\t) as ^I')
 
     return parser.parse_args()
 
@@ -14,6 +16,11 @@ def main(args):
     txt = [line.strip('\n') for line in open(args['file'], 'r').readlines()]
     if args['s']:
         txt = [line for line in txt if line]
+    if args['E']:
+        txt = [line+'$' for line in txt]
+    if args['T']:
+        txt = [line.replace('\t', '^I') for line in txt]
+
     if args['n']:
         fmt = '{0:>{w}} {1}'
         new_txt = list(enumerate(txt, start=1))
