@@ -1,6 +1,9 @@
 import argparse
 import sys
 
+# For formatting display data with line numbers
+LINE_FMT = '{0:>{w}} {1}'
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -24,18 +27,16 @@ def main(args):
         txt = [line.replace('\t', '^I') for line in txt]
 
     if args['n']:
-        fmt = '{0:>{w}} {1}'
         new_txt = list(enumerate(txt, start=1))
         num_width = len(str(len(txt)))
-        sys.stdout.write('\n'.join(fmt.format(num, line, w=num_width) for num, line in new_txt))
+        sys.stdout.write('\n'.join(LINE_FMT.format(num, line, w=num_width) for num, line in new_txt))
     elif args['b']:
         c = 1
         new_txt = []
         width = len(str(len(txt)))
-        fmt = '{0:>{w}} {1}'
         for line in txt:
             if line:
-                new_txt.append(fmt.format(c, line, w=width))
+                new_txt.append(LINE_FMT.format(c, line, w=width))
                 c += 1
             else:
                 new_txt.append(line)
