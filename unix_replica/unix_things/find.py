@@ -34,22 +34,21 @@ def check_by_time(links, time_args):
     import time
 
     for k, v in time_args.values():
-        if v:
-            if k.endswith('min'):
-                seconds = 60
-            elif k.endswith('time'):
-                seconds = 86400
+        if k.endswith('min'):
+            seconds = 60
+        elif k.endswith('time'):
+            seconds = 86400
 
-            adj = v * seconds
-            now = time.time()
-            earliest = now - adj
+        adj = v * seconds
+        now = time.time()
+        earliest = now - adj
 
-            if k.beginswith('a'):
-                links = [link for link in links if os.stat(link).st_atime >= earliest]
-            elif k.beginswith('c'):
-                links = [link for link in links if os.stat(link).st_ctime >= earliest]
-            elif k.beginswith('m'):
-                links = [link for link in links if os.stat(link).st_mtime >= earliest]
+        if k.beginswith('a'):
+            links = [link for link in links if os.stat(link).st_atime >= earliest]
+        elif k.beginswith('c'):
+            links = [link for link in links if os.stat(link).st_ctime >= earliest]
+        elif k.beginswith('m'):
+            links = [link for link in links if os.stat(link).st_mtime >= earliest]
 
     # No flag for checking times at cmd line
     return links
