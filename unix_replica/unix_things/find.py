@@ -33,7 +33,7 @@ def parse_args():
 def check_by_time(links, time_args):
     import time
 
-    for k, v in time_args.values():
+    for k, v in time_args.items():
         if k.endswith('min'):
             seconds = 60
         elif k.endswith('time'):
@@ -43,14 +43,13 @@ def check_by_time(links, time_args):
         now = time.time()
         earliest = now - adj
 
-        if k.beginswith('a'):
+        if k.startswith('a'):
             links = [link for link in links if os.stat(link).st_atime >= earliest]
-        elif k.beginswith('c'):
+        elif k.startswith('c'):
             links = [link for link in links if os.stat(link).st_ctime >= earliest]
-        elif k.beginswith('m'):
+        elif k.startswith('m'):
             links = [link for link in links if os.stat(link).st_mtime >= earliest]
 
-    # No flag for checking times at cmd line
     return links
 
 
@@ -71,10 +70,7 @@ def main(args):
         res = [link for link in res if os.access(link, os.X_OK)]
 
     # Check several access times
-    # Note: tried a comprehension doing {k: v for k,v in args.items()}
-    # Unfortunately get an error of NoneType not being iterable
-    # So here I do it by key acces args[k]
-    time_args = {k: args[k] for k in args if (k.endswith('min') or k.endswith('time')) and args[k]}
+    time_args = {k: v for k, v in args.items() if (k.endswith('min') or k.endswith('time')) and v}
     res = check_by_time(res, time_args)
 
     # Check other stats. Other find opts that need implementation: anewer, cnewer, gid, mnewer,path
