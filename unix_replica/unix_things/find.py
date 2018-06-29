@@ -20,8 +20,41 @@ def parse_args():
     parser.add_argument('-writable', action='store_true', help='same as -readable but checks for w-permission')
     parser.add_argument('-samefile', type=str, metavar='<name>', help='get matches which have the same inode as <name>')
     parser.add_argument('-size', type=int, metavar='<n>', help='get matches that have <n> size')
+    parser.add_argument('-amin', type=int, metavar='<n>', help='File accessed <n> minutes ago')
+    parser.add_argument('-cmin', type=int, metavar='<n>', help='File was changed <n> minutes ago')
+    parser.add_argument('-mmin', type=int, metavar='<n>', help='File was modified <n> minutes ago')
+    parser.add_argument('-atime', type=int, metavar='<n>', help='File was accessed <n> days ago')
+    parser.add_argument('-ctime', type=int, metavar='<n>', help='File was changed <n> days ago')
+    parser.add_argument('-mtime', type=int, metavar='<n>', help='File was modified <n> days ago')
 
     return parser.parse_args()
+
+
+def check_by_time(links, args):
+    import time
+
+    times = {k: v for k, v in args.values() if k.endswith('min') or k.endswith('time')}
+
+    for k, v in times.values():
+        if v:
+            if k.endswith('min'):
+                seconds = 60
+            elif k.endswith('time'):
+                seconds = 86400
+
+            adj = v * seconds
+            now = time.time()
+            earliest = now - adj
+
+            if k.beginswith('a'):
+                return [link for link in links if os.stat(link).st_atime >= earliest]
+            elif k.beginswith('c'):
+                return [link for link in links if os.stat(link).st_ctime >= earliest]
+            elif k.beginswith('m'):
+                return [link for link in links if os.stat(link).st_mtime >= earliest]
+
+    # No flag for checking times at cmd line
+    return links
 
 
 def main(args):
@@ -40,7 +73,10 @@ def main(args):
     if args['executable']:
         res = [link for link in res if os.access(link, os.X_OK)]
 
-    # Check other stats. Other find opts that need implementation: amin, anewer, atime, cmin, cnewer, ctime, gid, mmin, mtime, newer, path
+    # Check several access times
+    res = check_by_time(res, args)
+
+    # Check other stats. Other find opts that need implementation: anewer, cnewer, gid, mnewer,path
     # Check man find just to make sure if I missed anything else
     if args['size']:
         res = [link for link in res if os.stat(link).st_size == args['size']]
