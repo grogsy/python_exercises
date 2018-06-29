@@ -30,12 +30,10 @@ def parse_args():
     return parser.parse_args()
 
 
-def check_by_time(links, args):
+def check_by_time(links, time_args):
     import time
 
-    times = {k: v for k, v in args.values() if k.endswith('min') or k.endswith('time')}
-
-    for k, v in times.values():
+    for k, v in time_args.values():
         if v:
             if k.endswith('min'):
                 seconds = 60
@@ -47,11 +45,11 @@ def check_by_time(links, args):
             earliest = now - adj
 
             if k.beginswith('a'):
-                return [link for link in links if os.stat(link).st_atime >= earliest]
+                links = [link for link in links if os.stat(link).st_atime >= earliest]
             elif k.beginswith('c'):
-                return [link for link in links if os.stat(link).st_ctime >= earliest]
+                links = [link for link in links if os.stat(link).st_ctime >= earliest]
             elif k.beginswith('m'):
-                return [link for link in links if os.stat(link).st_mtime >= earliest]
+                links = [link for link in links if os.stat(link).st_mtime >= earliest]
 
     # No flag for checking times at cmd line
     return links
@@ -74,7 +72,8 @@ def main(args):
         res = [link for link in res if os.access(link, os.X_OK)]
 
     # Check several access times
-    res = check_by_time(res, args)
+    time_args = {k: v for k, v in args.values() if (k.endswith('min') or k.endswith('time')) and v}
+    res = check_by_time(res, time_args)
 
     # Check other stats. Other find opts that need implementation: anewer, cnewer, gid, mnewer,path
     # Check man find just to make sure if I missed anything else
