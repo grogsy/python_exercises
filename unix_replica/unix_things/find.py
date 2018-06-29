@@ -71,7 +71,10 @@ def main(args):
         res = [link for link in res if os.access(link, os.X_OK)]
 
     # Check several access times
-    time_args = {k: v for k, v in args.values() if (k.endswith('min') or k.endswith('time')) and v}
+    # Note: tried a comprehension doing {k: v for k,v in args.items()}
+    # Unfortunately get an error of NoneType not being iterable
+    # So here I do it by key acces args[k]
+    time_args = {k: args[k] for k in args if (k.endswith('min') or k.endswith('time')) and args[k]}
     res = check_by_time(res, time_args)
 
     # Check other stats. Other find opts that need implementation: anewer, cnewer, gid, mnewer,path
