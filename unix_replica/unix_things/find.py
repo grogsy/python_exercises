@@ -80,7 +80,16 @@ def main(args):
     if args['samefile']:
         res = [link for link in res if os.stat(link).st_ino == os.stat(args['samefile']).st_ino]
     if args['empty']:
-        res = [link for link in res if os.path.isdir(link) or not open(link, 'r').readlines()]
+        tmp = []
+        for link in res:
+            try:
+                if os.path.isdir(link) or not open(link, 'r').readlines() or not open(link, 'rb').readlines():
+                    tmp.append(link)
+            except PermissionError: # Can't tell if it contains anything; no read permission. Just assume it does
+                pass
+            except UnicodeError:    # The fact that we run into a unicode error means it contains something, skip it
+                pass
+        res = tmp
 
     if args['print']:
         sys.stdout.write('\n'.join(res))
