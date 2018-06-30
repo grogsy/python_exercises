@@ -21,6 +21,7 @@ requirements:
 import argparse
 import subprocess
 import sys
+import os
 
 
 TMP_HANDLE = 'pipe_tmp.txt'
@@ -43,6 +44,8 @@ def main(args):
         write_to_temp(txt)
 
     sys.stdout.write(txt.decode('utf-8'))
+
+    os.remove(TMP_HANDLE)
 
 
 def parse_args():
@@ -68,8 +71,14 @@ def write_to_temp(txt):
     It helps keep track across the different changes we make
     For every command in the stream we run on the file
     '''
+    text = txt.decode('utf-8').split('\r')
     with open(TMP_HANDLE, 'w') as tmp:
-        tmp.write(txt.decode('utf-8'))
+        for line in text:
+            l = line.strip('\n')
+            if line:
+                tmp.write(line)
+            else:
+                tmp.write('\n')
 
 
 if __name__ == '__main__':
