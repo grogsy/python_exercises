@@ -10,16 +10,26 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='unix find')
-    parser.add_argument('-cd', type=str, metavar='<DIR>', help='directory to search(default is cwd)')
+    parser.add_argument('-cd', type=str, metavar='<DIR>',
+                        help='directory to search (default is cwd)')
     parser.add_argument('-L', action='store_true', help='Follow symbolic links(get abs path)')
-    parser.add_argument('-name', type=str, metavar='<pattern>', help='get matches with the specified (regex) pattern')
+    parser.add_argument('-name', type=str, metavar='<pattern>', default='*',
+                        help='get matches with <pattern>. Default it check all(*)')
     parser.add_argument('-print', action='store_true', help='display results')
-    parser.add_argument('-empty', action='store_true', help='get matches that are either empty or a directory')
-    parser.add_argument('-readable', action='store_true', help='get matches that are readable by the current user')
-    parser.add_argument('-executable', action='store_true', help='same as -readable but checks for x-permision')
-    parser.add_argument('-writable', action='store_true', help='same as -readable but checks for w-permission')
-    parser.add_argument('-samefile', type=str, metavar='<name>', help='get matches which have the same inode as <name>')
+    # Permission tests
+    parser.add_argument('-readable', action='store_true',
+                        help='get matches that are readable by the current user')
+    parser.add_argument('-executable', action='store_true',
+                        help='same as -readable but checks for x-permision')
+    parser.add_argument('-writable', action='store_true',
+                        help='same as -readable but checks for w-permission')
+    # Stat tests
     parser.add_argument('-size', type=int, metavar='<n>', help='get matches that have <n> size')
+    parser.add_argument('-empty', action='store_true',
+                        help='get matches that are either empty or a directory')
+    parser.add_argument('-samefile', type=str, metavar='<name>',
+                        help='get matches which have the same inode as <name>')
+    # Time tests
     parser.add_argument('-amin', type=int, metavar='<n>', help='File accessed <n> minutes ago')
     parser.add_argument('-cmin', type=int, metavar='<n>', help='File was changed <n> minutes ago')
     parser.add_argument('-mmin', type=int, metavar='<n>', help='File was modified <n> minutes ago')
@@ -83,11 +93,10 @@ def main(args):
         tmp = []
         for link in res:
             try:
-                if os.path.isdir(link) or not open(link, 'r').readlines() or not open(link, 'rb').readlines():
+                if os.path.isdir(link) or not open(link, 'r').readlines():
                     tmp.append(link)
-            except PermissionError: # Can't tell if it contains anything; no read permission. Just assume it does
-                pass
-            except UnicodeError:    # The fact that we run into a unicode error means it contains something, skip it
+            # The fact that we run into a UnicodeError means that its not empty, skip it
+            except (UnicodeError, PermissionError): # os.access(file, r_OK) doesn't work as intended
                 pass
         res = tmp
 
