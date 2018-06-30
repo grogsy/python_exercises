@@ -74,11 +74,7 @@ def write_to_temp(txt):
     text = txt.decode('utf-8').split('\r')
     with open(TMP_HANDLE, 'w') as tmp:
         for line in text:
-            l = line.strip('\n')
-            if line:
-                tmp.write(line)
-            else:
-                tmp.write('\n')
+            tmp.write(line)
 
 
 if __name__ == '__main__':
