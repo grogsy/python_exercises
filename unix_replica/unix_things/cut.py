@@ -7,6 +7,8 @@ def parse_args():
     parser.add_argument('-d', type='str', help="Delimiter to indicate fields")
     parser.add_argument('-f', type='str', help="Dash(-) separated values for slice grabbing")
     parser.add_argument('-c', type='str', help="Comma separated values for index grabbing")
+    parser.add_argument('-s', action='store_true',
+                        help='if -d do not print lines without delimiter')
 
 
 def get_slice(fields):
@@ -36,6 +38,8 @@ def main(args):
         exit("Can only choose one of these options: -f/-c")
 
     if fields:
+        if args['s']:
+            txt = [line for line in txt if delimiter in line]
         indices = get_slice(fields)
         build = []
         for line in txt:
