@@ -44,8 +44,12 @@ def main(args):
         indices = get_slice(fields)
         build = []
         for line in txt:
-            build.append(delimiter.join(line.split(delimiter)[indices]))
-        sys.stdout.write(''.join(build))
+            if delimiter in line:
+                line = line.strip('\n')
+                build.append(delimiter.join(line.split(delimiter)[indices]))
+            else:
+                build.append(line)
+        sys.stdout.write('\n'.join(build))
 
     elif chars:
         build = []
