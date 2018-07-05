@@ -1,6 +1,6 @@
 # Couldn't find a solution that worked for me to pipe a list of files to wc that would produce the line count for all the files
 # So this is a script that tries
-# On the one hand you can I could do something like cat <list of files> | wc -l but its kind of pointless if there are too many files
+# On the one hand I could do something like cat <list of files> | wc -l but its kind of pointless if there are too many files
 
 import glob
 import subprocess
