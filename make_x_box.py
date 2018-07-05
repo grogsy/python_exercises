@@ -2,6 +2,9 @@
 # Some interview question posted on r/programmerhumor
 
 def make_x_box(width, height):
+    # To make this frickin box more symmetrical
+    height += 2
+    
     for y in range(height):
         build = 'x'
         for x in range(width):
