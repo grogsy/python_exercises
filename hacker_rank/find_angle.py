@@ -9,5 +9,3 @@ M = hypot(AB, BC) / 2
 # Only peeve I have about this is: How can I prove that the line formed from Midpoint(M) to B(BM) is equivalent in magnitude to the line formed by CM
 ans = int(round(degrees(acos((M**2+BC**2-M**2)/(2*M*BC)))))
 print('{:d}{}'.format(ans, u'\N{DEGREE SIGN}'))
-# print(int(round(degrees(acos((M**2 + BC**2 - M**2)/(2 * M *  BC))))), end='')
-# print(u'\N{DEGREE SIGN}')
