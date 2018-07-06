@@ -1,3 +1,5 @@
+# https://www.hackerrank.com/challenges/py-collections-ordereddict/problem
+
 from collections import OrderedDict
 
 sales = OrderedDict()
