@@ -1,4 +1,4 @@
-https://www.hackerrank.com/challenges/no-idea/problem
+# https://www.hackerrank.com/challenges/no-idea/problem
 
 happiness = 0 
 nums = input().split()
