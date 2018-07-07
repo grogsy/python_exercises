@@ -71,6 +71,7 @@ def write_to_temp(txt):
     It helps keep track across the different changes we make
     For every command in the stream we run on the file
     '''
+    # Considered using the tempfile module but the code I used for it was very repetitious
     text = txt.decode('utf-8').split('\r')
     with open(TMP_HANDLE, 'w') as tmp:
         for line in text:
