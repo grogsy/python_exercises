@@ -23,7 +23,7 @@ def find_numeric(line):
 
 
 def calculate_unicode_value(line):
-    return sum([ord(c) for word in line for c in word])
+    return sum(ord(c) for word in line for c in word)
 
 
 def main(args):
