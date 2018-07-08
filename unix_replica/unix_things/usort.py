@@ -45,3 +45,7 @@ def main(args):
         txt = reversed(txt)
 
     sys.stdout.write('\n'.join(txt))
+
+
+if __name__ == '__main__':
+    main(vars(parse_args()))
