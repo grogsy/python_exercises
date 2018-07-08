@@ -22,7 +22,7 @@ def find_numeric(line):
             continue
 
 
-def calculate_ascii_value(line):
+def calculate_unicode_value(line):
     return sum([ord(c) for word in line for c in word])
 
 
@@ -40,7 +40,7 @@ def main(args):
     if args['g']:
         txt = sorted(txt, key=lambda s: find_numeric(s))
     if args['n']:
-        txt = sorted(txt, key=lambda s: calculate_ascii_value(s))
+        txt = sorted(txt, key=lambda s: calculate_unicode_value(s))
     if args['r']:
         txt = reversed(txt)
 
