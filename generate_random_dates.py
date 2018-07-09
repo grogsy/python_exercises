@@ -2,6 +2,7 @@ import datetime as dt
 import random
 import time
 
+# Random comment -- testing git
 seed = range(100000000, int(time.time()))
 
 # Just an example of time format, plenty different ones to use from datetime.strftime
