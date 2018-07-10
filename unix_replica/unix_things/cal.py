@@ -32,14 +32,6 @@ def main(args):
     if not (args['year'] and args['month']):
         # Get the current date
         year, month = [int(t) for t in time.strftime("%Y %m").split()]
-    elif not args['year']:
-        # Get the current year
-        year = int(time.strftime("%Y"))
-        month = args['month']
-    elif not args['month']:
-        # Get the current month
-        year = args['year']
-        month = int(time.strftime("%m"))
     else:
         year, month = args['year'], args['month']
 
