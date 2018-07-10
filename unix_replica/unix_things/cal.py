@@ -6,9 +6,9 @@ import time
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('day', nargs='?', type=int)
-    parser.add_argument('month', nargs='?', type=int)
-    parser.add_argument('year', nargs='?', type=int)
+    parser.add_argument('day', nargs='?', default=int(time.strftime("%d")), type=int)
+    parser.add_argument('month', nargs='?', default=int(time.strftime("%m")), type=int)
+    parser.add_argument('year', nargs='?', default=int(time.strftime("%Y")), type=int)
     parser.add_argument('-s', action='store_true', help='first day is sunday')
     parser.add_argument('-m', action='store_true', default=True, help='first day is monday')
     parser.add_argument('-3', action='store_true', help='display three months')
@@ -29,11 +29,7 @@ def iterate_months(year, month, amt):
 
 
 def main(args):
-    if not (args['year'] and args['month']):
-        # Get the current date
-        year, month = [int(t) for t in time.strftime("%Y %m").split()]
-    else:
-        year, month = args['year'], args['month']
+    year, month = args['year'], args['month']
 
     calendar.setfirstweekday(0)
     if args['s']:
