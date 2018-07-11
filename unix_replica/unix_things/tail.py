@@ -20,7 +20,6 @@ def main(args):
         sys.stdout.write(''.join(f.readlines()[-amt:]))
         if args['f']:
             while True:
-                f.seek(0)
                 time.sleep(args['s'])
                 sys.stdout.write(''.join(f.readlines()[-amt:]))
 
