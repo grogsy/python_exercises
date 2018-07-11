@@ -8,7 +8,7 @@ def parse_args():
     parser.add_argument('file')
     parser.add_argument('-n', type=int, default=10, help='print out last n lines(default:10)')
     parser.add_argument('-s', metavar='--sleep-interval', type=float, default=1.0,
-                        help='with -f sleep for n seconds(default:1s)')
+                        help='with -f sleep for n seconds in between outputs(default:1s)')
     parser.add_argument('-f', action='store_true', help='continue outputting as file updates content')
 
     return parser.parse_args()
