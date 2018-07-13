@@ -3,8 +3,8 @@ import os
 import sys
 
 
-PROMPT = "Really delete %s? (Y)es/(N)o"
-VERBOSE = "Deleting %s"
+PROMPT = "Really delete %s? (Y)es/(N)o: "
+VERBOSE = "\nDeleting %s\n"
 
 
 def parse_args():
@@ -46,8 +46,9 @@ def remove_empty_directories(interactive=None, verbose=None):
                     continue
             if verbose:
                 sys.stdout.write(VERBOSE % d)
-            os.remove(d)
-        exit()
+            os.rmdir(d)
+        
+    exit()
 
 def remove_recursively(directory, interactive=None, verbose=None):
     os.chdir(directory)
@@ -62,7 +63,7 @@ def remove_recursively(directory, interactive=None, verbose=None):
             sys.stdout.write(VERBOSE % link)
         os.remove(link)
     os.chdir('..')
-    os.remove(directory)
+    os.rmdir(directory)
 
 if __name__ == '__main__':
     main(vars(parse_args()))
