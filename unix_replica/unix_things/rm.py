@@ -5,6 +5,7 @@ import sys
 
 PROMPT = "Really delete %s? (Y)es/(N)o: "
 VERBOSE = "\nDeleting %s\n"
+SUCCESS = "Successfully deleted %s\n"
 
 
 def parse_args():
@@ -32,6 +33,7 @@ def main(args):
                 if args['v']:
                     sys.stdout.write(VERBOSE % args['file'])
                 os.remove(args['file'])
+                sys.stdout.write(SUCCESS % args['file'])
 
 
 def remove_empty_directories(interactive=None, verbose=None):
@@ -47,23 +49,35 @@ def remove_empty_directories(interactive=None, verbose=None):
             if verbose:
                 sys.stdout.write(VERBOSE % d)
             os.rmdir(d)
-        
+            sys.stdout.write(SUCCESS % d)
+
     exit()
 
 def remove_recursively(directory, interactive=None, verbose=None):
     os.chdir(directory)
     for link in os.listdir():
-        if interactive:
-            ans = input(PROMPT % link)
-            if 'y' in ans:
-                pass
-            else:
-                continue
-        if verbose:
-            sys.stdout.write(VERBOSE % link)
-        os.remove(link)
+        if os.path.isdir(link):
+            if interactive:
+                ans = input(PROMPT % link)
+                if 'y' in ans:
+                    pass
+                else:
+                    continue
+            remove_recursively(link, interactive, verbose)
+        else:
+            if interactive:
+                ans = input(PROMPT % link)
+                if 'y' in ans:
+                    pass
+                else:
+                    continue
+            if verbose:
+                sys.stdout.write(VERBOSE % link)
+            os.remove(link)
+            sys.stdout.write(SUCCESS % link)
     os.chdir('..')
     os.rmdir(directory)
+    sys.stdout.write(SUCCESS % directory)
 
 if __name__ == '__main__':
     main(vars(parse_args()))
