@@ -12,7 +12,7 @@ def parse_args():
 
 
 def main(args):
-    sys.stdout.write(''.join(open(args['file']).readlines()[args['n']]))
+    sys.stdout.write(''.join(open(args['file']).readlines()[args['n']:]))
 
 
 if __name__ == '__main__':
