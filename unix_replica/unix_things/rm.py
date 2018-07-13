@@ -3,7 +3,7 @@ import os
 import sys
 
 
-PROMPT = "Really delete %s? (Y)es/(N)o: "
+PROMPT = "Really delete %s? (Y)es/(N)o/Yes to (A)ll, Ctrl+C to break out: "
 VERBOSE = "\nDeleting %s\n"
 SUCCESS = "Successfully deleted %s\n"
 
@@ -28,12 +28,14 @@ def main(args):
         remove_recursively(directory, args['i'], args['v'])
     else:
         if args['i']:
-            ans = input(PROMPT % args['file'])
+            ans = input(PROMPT % args['file']).lower()
             if 'y' in ans:
                 if args['v']:
                     sys.stdout.write(VERBOSE % args['file'])
-                os.remove(args['file'])
-                sys.stdout.write(SUCCESS % args['file'])
+            else:
+                exit()
+        os.remove(args['file'])
+        sys.stdout.write(SUCCESS % args['file'])
 
 
 def remove_empty_directories(interactive=None, verbose=None):
@@ -41,9 +43,11 @@ def remove_empty_directories(interactive=None, verbose=None):
     for d in dirs:
         if not os.listdir(d):
             if interactive:
-                ans = input(PROMPT % d)
+                ans = input(PROMPT % d).lower()
                 if 'y' in ans:
                     pass
+                elif 'a' in ans:
+                    interactive = False
                 else:
                     continue
             if verbose:
@@ -56,21 +60,17 @@ def remove_empty_directories(interactive=None, verbose=None):
 def remove_recursively(directory, interactive=None, verbose=None):
     os.chdir(directory)
     for link in os.listdir():
+        if interactive:
+            ans = input(PROMPT % link).lower()
+            if 'y' in ans:
+                pass
+            elif 'a' in ans:
+                interactive = False
+            else:
+                continue
         if os.path.isdir(link):
-            if interactive:
-                ans = input(PROMPT % link)
-                if 'y' in ans:
-                    pass
-                else:
-                    continue
             remove_recursively(link, interactive, verbose)
         else:
-            if interactive:
-                ans = input(PROMPT % link)
-                if 'y' in ans:
-                    pass
-                else:
-                    continue
             if verbose:
                 sys.stdout.write(VERBOSE % link)
             os.remove(link)
