@@ -7,7 +7,7 @@ LINE_FMT = '{0:>{w}} {1}'
 
 def parse_args():
     parser = argparse.ArgumentParser("Unix cat. Run without a file arg then echo to stdout.")
-    parser.add_argument('file', nargs='?')
+    parser.add_argument('files', nargs='*', default=[])
     parser.add_argument('-n', action='store_true', help='print line numbers')
     parser.add_argument('-s', action='store_true', help='squeeze blank lines')
     parser.add_argument('-b', action='store_true', help='like -n but only numbers for non-empty lines')
@@ -18,7 +18,7 @@ def parse_args():
 
 
 def main(args):
-    if not args['file']:
+    if not args['files']:
         c = 1
         while True:
             txt = input()
@@ -31,7 +31,7 @@ def main(args):
                 c+=1
             sys.stdout.write(txt+'\n')
     else:
-        txt = [line.strip('\n') for line in open(args['file'], 'r').readlines()]
+        txt = [line.strip('\n') for f in args['files'] for line in open(f, 'r').readlines()]
         if args['s']:
             txt = [line for line in txt if line]
         if args['E']:
