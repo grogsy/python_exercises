@@ -29,6 +29,10 @@ def parse_args():
                         help='get matches that are either empty or a directory')
     parser.add_argument('-samefile', type=str, metavar='<name>',
                         help='get matches which have the same inode as <name>')
+    parser.add_argument('-newer', type=str, metavar='<file>',
+                        help='Files modified more recently than <file>')
+    parser.add_argument('-anewer', type=str, metavar='<file>',
+                        help='files were *accessed* more recently than <file> was modified')
     # Time tests
     parser.add_argument('-amin', type=int, metavar='<n>', help='File accessed <n> minutes ago')
     parser.add_argument('-cmin', type=int, metavar='<n>', help='File was changed <n> minutes ago')
@@ -83,8 +87,12 @@ def main(args):
     time_args = {k: v for k, v in args.items() if (k.endswith('min') or k.endswith('time')) and v}
     res = check_by_time(res, time_args)
 
-    # Check other stats. Other find opts that need implementation: anewer, cnewer, gid, mnewer,path
+    # Check other stats. Other find opts that need implementation: cnewer, gid,path
     # Check man find just to make sure if I missed anything else
+    if args['newer']:
+        res = [link for link in res if os.stat(link).st_mtime > os.stat(args['newer']).st_mtime]
+    if args['anewer']:
+        res = [link for link in res if os.stat(link).st_atime > os.stat(args['anewer']).st_mtime]
     if args['size']:
         res = [link for link in res if os.stat(link).st_size == args['size']]
     if args['samefile']:
