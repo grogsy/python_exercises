@@ -6,7 +6,7 @@ LINE_FMT = '{0:>{w}} {1}'
 
 
 def parse_args():
-    parser = argparse.ArgumentParser("Unix cat. Run without a file arg then echo to stdout.")
+    parser = argparse.ArgumentParser("Unix cat. Run without a file arg echos to stdout.")
     parser.add_argument('files', nargs='*', default=[])
     parser.add_argument('-n', action='store_true', help='print line numbers')
     parser.add_argument('-s', action='store_true', help='squeeze blank lines')
