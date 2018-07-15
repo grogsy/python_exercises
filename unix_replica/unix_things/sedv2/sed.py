@@ -5,7 +5,7 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='bare implementation of unix sed')
-    parser.add_argument('file', type=str)
+    parser.add_argument('files', type=str)
     parser.add_argument('expression', metavar='s/<OLD>/<NEW>/opts<g>', type=str, help='use this template to search and replace text')
     parser.add_argument('-w', action='store_true', help='write change to current file')
     parser.add_argument('-i', action='store_true', help='case-insensitive')
@@ -30,7 +30,7 @@ def main(args):
     new_exp = regex_args['new']
 
     # For now we have global replacing by default
-    txt = [line.strip('\n') for line in open(args['file'], 'r').readlines()]
+    txt = [line.strip('\n') for f in args['files'] for line in open(f, 'r').readlines()]
     txt = [old_exp.sub(new_exp, line) for line in txt]
     if args['w']:
         with open(args['file'], 'w') as f:
@@ -41,3 +41,4 @@ def main(args):
 
 if __name__ == '__main__':
     main(vars(parse_args()))
+
