@@ -4,7 +4,7 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='unix grep')
-    parser.add_argument('file', type=str)
+    parser.add_argument('files', type=str, nargs='*')
     parser.add_argument('-e', type=str, metavar='<pattern>', help='regex pattern')
     parser.add_argument('-i', action='store_true', help='ignore case')
     parser.add_argument('-v', action='store_true', help='invert matching(get non-matching lines)')
@@ -17,7 +17,7 @@ def parse_args():
 
 
 def main(args):
-    txt = [line.strip('\n') for line in open(args['file'], 'r').readlines()]
+    txt = [line.strip('\n') for f in args['files'] for line in open(f, 'r').readlines()]
     if args['n']:
         ntmp = list(enumerate(txt, start=1))
         fmt = '{0:>{w}} {1}'
