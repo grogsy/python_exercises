@@ -4,7 +4,7 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='unix sort')
-    parser.add_argument('file')
+    parser.add_argument('files', type=str, nargs='*')
     parser.add_argument('-n', action='store_true', help='Sort by string unicode point')
     parser.add_argument('-k', type=int, nargs='+', help='Sort by specified key(s)')
     parser.add_argument('-r', action='store_true', help='Reverse')
@@ -27,7 +27,7 @@ def calculate_unicode_value(line):
 
 
 def main(args):
-    txt = sorted([line for line in open(args['file'], 'r').readlines()])
+    txt = sorted([line for f in args['files'] for line in open(f, 'r').readlines()])
 
     if args['f']:
         txt = sorted(txt, key=lambda s: s.casefold())
