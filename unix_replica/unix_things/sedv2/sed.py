@@ -5,7 +5,7 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='bare implementation of unix sed')
-    parser.add_argument('files', type=str)
+    parser.add_argument('files', type=str, nargs='*')
     parser.add_argument('expression', metavar='s/<OLD>/<NEW>/opts<g>', type=str, help='use this template to search and replace text')
     parser.add_argument('-w', action='store_true', help='write change to current file')
     parser.add_argument('-i', action='store_true', help='case-insensitive')

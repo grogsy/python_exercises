@@ -3,7 +3,7 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Unix cut")
-    parser.add_argument('file', type=str)
+    parser.add_argument('files', type=str, nargs='*')
     parser.add_argument('-d', type=str, help="Delimiter to indicate fields")
     parser.add_argument('-f', type=str, help="Dash(-) separated values for slice grabbing")
     parser.add_argument('-c', type=str, help="Comma separated values for index grabbing")
@@ -28,7 +28,7 @@ def get_slice(fields):
 
 
 def main(args):
-    txt = [line for line in open(args['file'], 'r').readlines()]
+    txt = [line for f in args['files'] for line in open(f, 'r').readlines()]
     delimiter = args['d']
     fields = args['f']
     chars = args['c']
