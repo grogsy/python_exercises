@@ -29,6 +29,13 @@ def main(args):
             if args['n']:
                 txt = LINE_FMT.format(c, txt, w=5)
                 c+=1
+            if args['b']:
+                txt = txt.strip('\n').strip('\t')
+                if txt:
+                    txt = LINE_FMT.format(c, txt, w=5)
+                    c += 1
+                else:
+                    pass
             sys.stdout.write(txt+'\n')
     else:
         txt = [line.strip('\n') for f in args['files'] for line in open(f, 'r').readlines()]
