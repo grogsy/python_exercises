@@ -16,7 +16,8 @@ def main(args):
     flag = re.IGNORECASE if args['i'] else 0
 
     sed_args = args['expression'].split('/')
-
+    
+    # Consider putting this code into a function
     sed_parser = argparse.ArgumentParser()
     sub_parser = sed_parser.add_subparsers()
     substitution_parser = sub_parser.add_parser('s')
