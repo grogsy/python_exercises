@@ -78,6 +78,7 @@ def remove_recursively(directory, interactive=None, verbose=None):
     os.chdir('..')
     os.rmdir(directory)
     sys.stdout.write(SUCCESS % directory)
+    exit()
 
 if __name__ == '__main__':
     main(vars(parse_args()))
