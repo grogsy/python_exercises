@@ -55,6 +55,7 @@ class SingleLinkedList:
                 res = self.tail
                 cur.next = None
                 self.tail = cur
+                self._count -= 1
                 return res
             cur = cur.next
 
