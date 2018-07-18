@@ -38,8 +38,11 @@ class SingleLinkedList:
         """Finds a matching item and removes it from the list"""
         cur = self.head
         while True:
-            if cur.value == obj:
-                return cur
+            if cur.next.value == obj:
+                res = cur.next.value
+                cur.next = cur.next.next
+                self._count -= 1
+                return res
             # Reached the tail
             elif cur.value is None:
                 return -1
