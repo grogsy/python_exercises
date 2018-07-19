@@ -37,17 +37,21 @@ class SingleLinkedList:
 
     def remove(self, obj):
         """Finds a matching item and removes it from the list"""
+        i = self.count() - 1
         cur = self.head
         while True:
             if cur.next.value == obj:
-                res = cur.next.value
+                # res = cur.next.value
                 cur.next = cur.next.next
                 self._count -= 1
-                return res
+                # return res
+                # for some reason we will return the index at which the val is stored instead
+                return i
             # Reached the tail
             elif cur.value is None:
                 return -1
             cur = cur.next
+            i -= 1
 
     def shift(self, obj):
         """Like push but places the value at the tail"""
@@ -86,6 +90,7 @@ class SingleLinkedList:
                 return res
             cur = cur.next
 
+    # Turn this into a property
     def count(self):
         """Count the number of elements in the list"""
         return self._count
@@ -93,16 +98,26 @@ class SingleLinkedList:
     def get(self, i):
         """Get the value at a given index"""
         # zero-based index
-        j = 0
+        # Also so for this implementation, we consider the tail to be the 0th index..
+        j = self.count() - 1
         cur = self.head
         while True:
-            if j+1 > self.count():
+            # Reached the end of the list
+            if j < 0:
                 raise IndexError
             if j == i:
                 return cur.value
 
-            j += 1
+            j -= 1
             cur = cur.next
+
+    def first(self):
+        """Get the head value"""
+        return self.head.value
+
+    def last(self):
+        """Get the tail value"""
+        return self.tail.value
 
     def dump(self):
         """Get current list state"""
