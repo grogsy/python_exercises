@@ -1,3 +1,5 @@
+# All thats left to do is implement functions for getting first(head) and last(tail)
+
 class Node:
     def __init__(self, value, nxt):
         self.value = value
@@ -22,9 +24,9 @@ class SingleLinkedList:
             self.tail = Node(obj, None)
             self.head = self.tail
             self._count += 1
-            return
-        self.head = Node(obj, self.head)
-        self._count += 1
+        else:
+            self.head = Node(obj, self.head)
+            self._count += 1
 
     def pop(self):
         """Removes the most recently inserted item and returns it"""
@@ -32,7 +34,6 @@ class SingleLinkedList:
         self.head = self.head.next
         self._count -= 1
         return res
-
 
     def remove(self, obj):
         """Finds a matching item and removes it from the list"""
@@ -48,14 +49,37 @@ class SingleLinkedList:
                 return -1
             cur = cur.next
 
+    def shift(self, obj):
+        """Like push but places the value at the tail"""
+        if not self.head:
+            self.tail = Node(obj, None)
+            self.head = self.tail
+            self._count += 1
+        else:
+            cur = self.head
+            while True:
+                if cur is self.tail:
+                    cur.next = Node(obj, None)
+                    self.tail = cur.next
+                    self._count += 1
+                    break
+                cur = cur.next
+
     def unshift(self):
         """Removes the item at tail and returns it"""
+        if self.count() == 0:
+            return None
         if self.count() == 1:
-            return "Cannot unshift if there is only one item in the list"
+            res = self.head.value
+            self.head = None
+            self.tail = None
+            self._count -= 1
+            return res
+
         cur = self.head
         while True:
             if cur.next is self.tail:
-                res = self.tail
+                res = cur.next.value
                 cur.next = None
                 self.tail = cur
                 self._count -= 1
@@ -68,9 +92,22 @@ class SingleLinkedList:
 
     def get(self, i):
         """Get the value at a given index"""
+        # zero-based index
+        j = 0
+        cur = self.head
+        while True:
+            if j+1 > self.count():
+                raise IndexError
+            if j == i:
+                return cur.value
 
+            j += 1
+            cur = cur.next
 
     def dump(self):
+        """Get current list state"""
+        if self.count() == 0:
+            return "List currently empty"
         contents = []
         cur = self.head
         while True:
