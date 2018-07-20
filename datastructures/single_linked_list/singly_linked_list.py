@@ -37,6 +37,7 @@ class SingleLinkedList:
 
     def remove(self, obj):
         """Finds a matching item and removes it from the list"""
+        # Tail is the 0th index
         i = self.count() - 1
         cur = self.head
         while True:
