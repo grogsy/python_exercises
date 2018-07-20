@@ -1,3 +1,5 @@
+'''demonstrates inheritance and multiple inheritance'''
+
 class Contact:
     all_contacts = []
     def __init__(self, name='', email='', **kwargs):
@@ -7,6 +9,7 @@ class Contact:
         self.all_contacts.append(self)
 
     def __repr__(self):
+        # using a dict to test dict interpolation with old-style formatting
         info = dict(name=self.name,
                     email=self.email)
         # return "%(name)s: %(email)s" % info
@@ -26,15 +29,8 @@ class Friend(Contact, AddressHolder):
         self.phone = phone
 
     def __repr__(self):
-        contact_info = Contact.__repr__()
-        info = dict(phone=self.phone,
-                    street=self.street,
-                    city=self.city,
-                    state=self.state,
-                    code=self.code) # Gonna just use this for something else
-        info.update(contact_info)
+        return "Friend<%s>" % self.name
 
-        return "Friend<%(name)s>" % info
 
 
 
