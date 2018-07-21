@@ -1,4 +1,4 @@
-# All thats left to do is implement functions for getting first(head) and last(tail)
+'''Attempt to implement Single Linked List without using built-in structures'''
 
 class Node:
     def __init__(self, value, nxt):
@@ -30,6 +30,9 @@ class SingleLinkedList:
 
     def pop(self):
         """Removes the most recently inserted item and returns it"""
+        # Alternatively, can test if self.head is None:
+        if self.count() == 0:
+            return None
         res = self.head.value
         self.head = self.head.next
         self._count -= 1
@@ -40,17 +43,20 @@ class SingleLinkedList:
         # Tail is the 0th index
         i = self.count() - 1
         cur = self.head
-        while True:
-            if cur.next.value == obj:
-                # res = cur.next.value
-                cur.next = cur.next.next
+        prev = None
+        while cur:
+            if cur.value == obj:
+                if not prev:
+                    self.head = cur.next
+                else:
+                    prev.next = cur.next
                 self._count -= 1
-                # return res
-                # for some reason we will return the index at which the val is stored instead
                 return i
             # Reached the tail
             elif cur.value is None:
                 return -1
+            # Thank you for using your head ..
+            prev = cur
             cur = cur.next
             i -= 1
 
@@ -62,7 +68,7 @@ class SingleLinkedList:
             self._count += 1
         else:
             cur = self.head
-            while True:
+            while cur:
                 if cur is self.tail:
                     cur.next = Node(obj, None)
                     self.tail = cur.next
@@ -82,9 +88,9 @@ class SingleLinkedList:
             return res
 
         cur = self.head
-        while True:
-            if cur.next is self.tail:
-                res = cur.next.value
+        while cur:
+            if cur is self.tail:
+                res = cur.value
                 cur.next = None
                 self.tail = cur
                 self._count -= 1
