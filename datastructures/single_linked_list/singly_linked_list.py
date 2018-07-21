@@ -23,16 +23,15 @@ class SingleLinkedList:
         if not self.head:
             self.tail = Node(obj, None)
             self.head = self.tail
-            self._count += 1
         else:
             self.head = Node(obj, self.head)
-            self._count += 1
+        self._count += 1
 
     def pop(self):
         """Removes the most recently inserted item and returns it"""
         # Alternatively, can test if self.head is None:
         if self.count() == 0:
-            return None
+            res = None
         res = self.head.value
         self.head = self.head.next
         self._count -= 1
@@ -50,8 +49,6 @@ class SingleLinkedList:
                     self.head = cur.next
                 else:
                     prev.next = cur.next
-                self._count -= 1
-                return i
             # Reached the tail
             elif cur.value is None:
                 return -1
@@ -59,43 +56,44 @@ class SingleLinkedList:
             prev = cur
             cur = cur.next
             i -= 1
+        self._count -= 1
+        return i
 
     def shift(self, obj):
         """Like push but places the value at the tail"""
         if not self.head:
             self.tail = Node(obj, None)
             self.head = self.tail
-            self._count += 1
         else:
             cur = self.head
             while cur:
                 if cur is self.tail:
                     cur.next = Node(obj, None)
                     self.tail = cur.next
-                    self._count += 1
                     break
                 cur = cur.next
+        self._count += 1
 
     def unshift(self):
         """Removes the item at tail and returns it"""
         if self.count() == 0:
-            return None
+            res = None
         if self.count() == 1:
             res = self.head.value
             self.head = None
             self.tail = None
-            self._count -= 1
-            return res
 
         cur = self.head
+        prev = None
         while cur:
             if cur is self.tail:
                 res = cur.value
-                cur.next = None
-                self.tail = cur
-                self._count -= 1
-                return res
+                prev.next = None
+                self.tail = prev
+            prev = cur
             cur = cur.next
+        self._count -= 1
+        return res
 
     # Turn this into a property
     def count(self):
@@ -130,14 +128,18 @@ class SingleLinkedList:
         """Get current list state"""
         if self.count() == 0:
             return "List currently empty"
-        contents = []
         cur = self.head
-        while True:
-            if cur.next is None:
+        while cur:
+            if cur is self.tail:
+                print(cur.value)
+            else:
+                print(cur.value, end='->')
+
+            '''if cur.next is None:
                 contents.append(repr(cur.value))
                 break
             else:
                 contents.append(repr(cur.value))
             cur = cur.next
-        return '->'.join(contents)
+        return '->'.join(contents)''' # trying to use no built-ins data structures here
 
