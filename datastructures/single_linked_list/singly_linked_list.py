@@ -78,16 +78,17 @@ class SingleLinkedList:
             res = self.head.value
             self.head = None
             self.tail = None
-
-        cur = self.head
-        prev = None
-        while cur:
-            if cur is self.tail:
-                res = cur.value
-                prev.next = None
-                self.tail = prev
-            prev = cur
-            cur = cur.next
+        else:
+            cur = self.head
+            prev = None
+            while cur:
+                if cur is self.tail:
+                    res = cur.value
+                    prev.next = None
+                    self.tail = prev
+                    break
+                prev = cur
+                cur = cur.next
         self._count -= 1
         return res
 
@@ -108,7 +109,6 @@ class SingleLinkedList:
                 raise IndexError
             if j == i:
                 return cur.value
-
             j -= 1
             cur = cur.next
 
