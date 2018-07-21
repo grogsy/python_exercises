@@ -32,8 +32,9 @@ class SingleLinkedList:
         # Alternatively, can test if self.head is None:
         if self.count() == 0:
             res = None
-        res = self.head.value
-        self.head = self.head.next
+        else:
+            res = self.head.value
+            self.head = self.head.next
         self._count -= 1
         return res
 
@@ -49,10 +50,10 @@ class SingleLinkedList:
                     self.head = cur.next
                 else:
                     prev.next = cur.next
+                break
             # Reached the tail
             elif cur.value is None:
                 return -1
-            # Thank you for using your head ..
             prev = cur
             cur = cur.next
             i -= 1
@@ -65,13 +66,8 @@ class SingleLinkedList:
             self.tail = Node(obj, None)
             self.head = self.tail
         else:
-            cur = self.head
-            while cur:
-                if cur is self.tail:
-                    cur.next = Node(obj, None)
-                    self.tail = cur.next
-                    break
-                cur = cur.next
+            self.tail.next = Node(obj, None)
+            self.tail = self.tail.next
         self._count += 1
 
     def unshift(self):
