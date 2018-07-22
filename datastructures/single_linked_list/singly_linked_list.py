@@ -1,4 +1,8 @@
-'''Attempt to implement Single Linked List without using built-in structures'''
+'''Attempt to implement Single Linked List without using built-in structures
+   Commented out code is my interpretation of the implementation
+   Actual code surrounding my commented out code is the desired specification
+   for implementing the single linked list.
+'''
 
 class Node:
     def __init__(self, value, nxt):
@@ -28,7 +32,7 @@ class SingleLinkedList:
         self._count += 1
 
     def pop(self):
-        """Removes the most recently inserted item and returns it"""
+        """Removes the head and returns it"""
         # Alternatively, can test if self.head is None:
         if self.count() == 0:
             res = None
@@ -106,19 +110,24 @@ class SingleLinkedList:
         while True:
             # Reached the end of the list
             if j < 0:
-                raise IndexError
+                # raise IndexError
+                return None
             if j == i:
                 return cur.value
             j -= 1
             cur = cur.next
 
     def first(self):
-        """Get the head value"""
-        return self.head.value
+        """Get the left-most(tail) value"""
+        # very confusing
+        # One way to interpret it better is to think of
+        # The tail as the 0-th(first) item
+        return self.tail.value
 
     def last(self):
-        """Get the tail value"""
-        return self.tail.value
+        """Get the right-most(head) value"""
+        # And the head to be the highest-indexed item
+        return self.head.value
 
     def dump(self):
         """Get current list state"""
