@@ -139,6 +139,7 @@ class SingleLinkedList:
                 print(cur.value)
             else:
                 print(cur.value, end='->')
+                break
 
             '''if cur.next is None:
                 contents.append(repr(cur.value))
