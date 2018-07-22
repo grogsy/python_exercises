@@ -137,9 +137,10 @@ class SingleLinkedList:
         while cur:
             if cur is self.tail:
                 print(cur.value)
+                break
             else:
                 print(cur.value, end='->')
-                break
+            cur = cur.next
 
             '''if cur.next is None:
                 contents.append(repr(cur.value))
