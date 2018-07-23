@@ -1,11 +1,11 @@
-from singly_linked_list import *
+from single_linked_list import *
 
 def test_push():
     colors = SingleLinkedList()
     colors.push("Pthalo Blue")
-    assert colors.count() == 1
+    assert colors.count == 1
     colors.push("Ultramarine Blue")
-    assert colors.count() == 2
+    assert colors.count == 2
 
 def test_pop():
     colors = SingleLinkedList()
@@ -28,15 +28,15 @@ def test_unshift():
 def test_shift():
     colors = SingleLinkedList()
     colors.shift("Cadmium Orange")
-    assert colors.count() == 1
+    assert colors.count == 1
 
     colors.shift("Carbazole Violet")
-    assert colors.count() == 2
+    assert colors.count == 2
 
     assert colors.pop() == "Cadmium Orange"
-    assert colors.count() == 1
+    assert colors.count == 1
     assert colors.pop() == "Carbazole Violet"
-    assert colors.count() == 0
+    assert colors.count == 0
 
 def test_remove():
     colors = SingleLinkedList()
