@@ -3,20 +3,7 @@ old implementation: last val<-n<-...<-4<-3<-2<-first val
 
 new implementation: first val<-2<-3<-4<-...<-n<-last val
 
-In the first implementation the 0-th index was on the right side of the list
-and the max index would be on the left side. This was due to a confusing
-interpretation of the spec to implement the sll. For example in the old version,
-pushing a value into the list would push all existing values to the right,
-similarly to how list.insert(value, 0) works, and that can be really confusing.
-If anything, it should be more like list.append(value)
-
-This implementation attempts to remedy confusion by making the the leftmost value
-the 0th index and the rightmost index to be the max-index, as is with
-conventional array/list-based structures. The methods should still work
-fundamentally the same way as the old version; theyre more or less the same thing.
-The only real difference is that this new implementation reconciles the chosen
-vocabulary for the method names; using and reading the code for the methods should
-seem more intuitive now and less confusing. Its less of a pain in the ass.
+Rewrote single linked list
 '''
 
 
