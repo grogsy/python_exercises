@@ -12,12 +12,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main(args):
-    flag = re.IGNORECASE if args['i'] else 0
-
-    sed_args = args['expression'].split('/')
-    
-    # Consider putting this code into a function
+def parse_sed_args(args):
     sed_parser = argparse.ArgumentParser()
     sub_parser = sed_parser.add_subparsers()
     substitution_parser = sub_parser.add_parser('s')
@@ -25,7 +20,16 @@ def main(args):
     substitution_parser.add_argument('new', type=str)
     substitution_parser.add_argument('extra-opts', type=str)
 
-    regex_args = vars(sed_parser.parse_args(sed_args))
+    return sed_parser.parse_args(args)
+
+
+
+def main(args):
+    flag = re.IGNORECASE if args['i'] else 0
+
+    sed_args = args['expression'].split('/')
+
+    regex_args = vars(parse_sed_args(sed_args))
 
     old_exp = re.compile(regex_args['old'], flags=flag)
     new_exp = regex_args['new']
