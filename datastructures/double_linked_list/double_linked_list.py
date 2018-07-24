@@ -41,11 +41,11 @@ class DoubleLinkedList:
         if not self.tail or not self.head:
             return None
         res = self.tail.value
-        if self.count == 1:
-            self.head = self.tail = None
-        else:
-            self.tail = self.tail.prev
+        self.tail = self.tail.prev
+        try:
             self.tail.next = None
+        except AttributeError: # Reached NoneType, only 1 node in list
+            self.head = self.tail = None
 
         self._count -= 1
         return res
@@ -55,12 +55,11 @@ class DoubleLinkedList:
         if not self.head or not self.tail:
             return None
         res = self.head.value
-        if self.count == 1:
-            self.head = self.tail = None
-        else:
-            res = self.head.value
-            self.head = self.head.next
+        self.head = self.head.next
+        try:
             self.head.prev = None
+        except AttributeError: # Reached NoneType
+            self.head = self.tail = None
 
         self._count -= 1
         return res
