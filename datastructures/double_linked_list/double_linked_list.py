@@ -100,6 +100,13 @@ class DoubleLinkedList:
     def count(self):
         return self._count
 
+    def _check_invariant(self):
+        if self.count == 0:
+            assert self.head is None and self.tail is None
+        if self.count == 1:
+            assert self.head is self.tail
+        assert self.head.prev is None and self.tail.next is None
+
     def dump(self):
         '''Get list current state'''
         if self.count == 0:
