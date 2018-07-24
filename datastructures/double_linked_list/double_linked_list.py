@@ -38,22 +38,29 @@ class DoubleLinkedList:
 
     def pop(self):
         '''Remove current node at the tail and return its value'''
-        if not self.tail:
+        if not self.tail or not self.head:
             return None
         res = self.tail.value
-        self.tail = self.tail.prev
-        self.tail.next = None
+        if self.count == 1:
+            self.head = self.tail = None
+        else:
+            self.tail = self.tail.prev
+            self.tail.next = None
 
         self._count -= 1
         return res
 
     def unshift(self):
         '''Remove current node at head and return its value'''
-        if not self.head:
+        if not self.head or not self.tail:
             return None
         res = self.head.value
-        self.head = self.head.next
-        self.head.prev = None
+        if self.count == 1:
+            self.head = self.tail = None
+        else:
+            res = self.head.value
+            self.head = self.head.next
+            self.head.prev = None
 
         self._count -= 1
         return res
@@ -65,11 +72,12 @@ class DoubleLinkedList:
         while current:
             if current.value == obj:
                 if current is self.head:
-                    self.head = current.next
-                    self.head.prev = None
+                    self.unshift()
+                elif current is self.tail:
+                    self.pop()
                 else:
                     current.prev.next = current.next
-                self._count -= 1
+                    self._count -= 1
                 return i
             current = current.next
             i += 1
@@ -103,9 +111,10 @@ class DoubleLinkedList:
     def _check_invariant(self):
         if self.count == 0:
             assert self.head is None and self.tail is None
-        if self.count == 1:
+        elif self.count == 1:
             assert self.head is self.tail
-        assert self.head.prev is None and self.tail.next is None
+        else:
+            assert self.head.prev is None and self.tail.next is None
 
     def dump(self):
         '''Get list current state'''

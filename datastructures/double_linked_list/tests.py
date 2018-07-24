@@ -100,3 +100,12 @@ def test_get():
     assert colors.get(0) == "Vermillion"
     colors.pop()
     assert colors.get(0) == None
+
+test_push()
+test_pop()
+test_unshift()
+test_shift()
+test_remove()
+test_first()
+test_last()
+test_get()
