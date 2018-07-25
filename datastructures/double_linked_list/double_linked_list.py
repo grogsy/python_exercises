@@ -22,7 +22,7 @@ class DoubleLinkedList:
             self.head = self.tail = Node(None, obj, None)
         else:
             prev_tail, self.tail = self.tail, Node(self.tail, obj, None)
-            # prev_tail still points to None, so we make it point to the new tail
+            # previous tail still points to None, so we make it point to the new tail
             prev_tail.next = self.tail
         self._count += 1
 
@@ -74,7 +74,10 @@ class DoubleLinkedList:
                 elif current is self.tail:
                     self.pop()
                 else:
-                    current.prev.next = current.next
+                    prev_node, next_node = current.prev, current.next
+                    # Link the two nodes next to current node together
+                    prev_node.next = next_node
+                    next_node.prev = prev_node
                     self._count -= 1
                 return i
             current = current.next
