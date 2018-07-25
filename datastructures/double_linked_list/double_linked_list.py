@@ -21,9 +21,9 @@ class DoubleLinkedList:
         if not self.head:
             self.head = self.tail = Node(None, obj, None)
         else:
-            current_tail = self.tail
-            self.tail = Node(current_tail, obj, None)
-            current_tail.next = self.tail
+            prev_tail, self.tail = self.tail, Node(self.tail, obj, None)
+            # prev_tail still points to None, so we make it point to the new tail
+            prev_tail.next = self.tail
         self._count += 1
 
     def shift(self, obj):
@@ -31,9 +31,8 @@ class DoubleLinkedList:
         if not self.head:
             self.head = self.tail = Node(None, obj, None)
         else:
-            current_head = self.head
-            self.head = Node(None, obj, current_head)
-            current_head.prev = self.head
+            prev_head, self.head = self.head, Node(None, obj, self.head)
+            prev_head.prev = self.head
         self._count += 1
 
     def pop(self):
