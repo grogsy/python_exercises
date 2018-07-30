@@ -85,7 +85,16 @@ class DoubleLinkedList:
 
     def get(self, index):
         '''Get the value of the node at the given index.
-        Returns None if value isn't in any of the nodes'''
+        Returns None if value isn't in any of the nodes
+
+        Can probably rewrite this function to take an object like remove
+        and implement it like so:
+
+        current = self.head
+        while current and current.value is not obj:
+            current = current.next
+        return current.value
+        '''
         i = 0
         current = self.head
         res = None
@@ -96,6 +105,7 @@ class DoubleLinkedList:
             i += 1
             current = current.next
         return res
+
 
     def first(self):
         '''Return the head value'''
