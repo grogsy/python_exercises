@@ -1,9 +1,4 @@
-from datastructures.single_linked_list import Node
-
-class Node:
-    def __init__(self, value, nxt):
-        self.value = value
-        self.next = nxt
+from .node import SingleLinkedNode as Node
 
 class Stack:
     def __init__(self):

@@ -1,15 +1,4 @@
-class Node:
-    def __init__(self, prev, value, nxt):
-        self.prev = prev
-        self.value = value
-        self.next = nxt
-
-    def __repr__(self):
-        prev_val = self.prev.value if self.prev else None
-        next_val = self.next.value if self.next else None
-
-        return f"[{prev_val}:{self.value}:{next_val}]"
-
+from .node import DoubleLinkedNode as Node
 
 class DoubleLinkedList:
     def __init__(self):
@@ -19,9 +8,9 @@ class DoubleLinkedList:
     def push(self, obj):
         '''Place a node at the tail of the list'''
         if not self.head:
-            self.head = self.tail = Node(None, obj, None)
+            self.head = self.tail = Node(obj, prev=None, nxt=None)
         else:
-            prev_tail, self.tail = self.tail, Node(self.tail, obj, None)
+            prev_tail, self.tail = self.tail, Node(obj, prev=self.tail, nxt=None)
             # previous tail still points to None, so we make it point to the new tail
             prev_tail.next = self.tail
         self._count += 1
@@ -29,9 +18,9 @@ class DoubleLinkedList:
     def shift(self, obj):
         '''Place a node at the head of the list'''
         if not self.head:
-            self.head = self.tail = Node(None, obj, None)
+            self.head = self.tail = Node(obj, None, None)
         else:
-            prev_head, self.head = self.head, Node(None, obj, self.head)
+            prev_head, self.head = self.head, Node(obj, prev=None, nxt=self.head)
             prev_head.prev = self.head
         self._count += 1
 
