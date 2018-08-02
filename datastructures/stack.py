@@ -1,3 +1,5 @@
+from datastructures.single_linked_list import Node
+
 class Node:
     def __init__(self, value, nxt):
         self.value = value
