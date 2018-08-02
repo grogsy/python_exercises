@@ -5,19 +5,7 @@ new implementation: first val<-2<-3<-4<-...<-n<-last val
 
 Rewrote single linked list
 '''
-
-
-class Node:
-    '''Node'''
-    def __init__(self, value, nxt):
-        self.value = value
-        self.next = nxt
-
-    def __repr__(self):
-        # Better using ternary operator and makes more sense to read too
-        next_val = self.next.value if self.next else None
-        return f"[{self.value}:{repr(next_val)}]"
-
+from .node import SingleLinkedNode as Node
 
 class SingleLinkedList:
     '''Single-Linked-List'''
