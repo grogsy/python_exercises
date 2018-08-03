@@ -64,6 +64,22 @@ class LinkedList:
             node = node.next
         return None
 
+    @property
+    def count(self):
+        node = self.head
+        i = 0
+        while node:
+            i += 1
+            node = node.next
+        return i
+
+    def __len__(self):
+        return self.count
+
+    def __bool__(self):
+        return self.count > 0
+
+
 
 class BucketError(BaseException):
     pass
@@ -139,7 +155,7 @@ class HashTable:
         self.buckets = BucketList()
 
     def _naive_hash(self, key):
-        return sum(ord(c) for c in key) % 7
+        return sum(ord(c) for c in str(key)) % 7
 
     def __setitem__(self, key, value):
         hashed_key = self._naive_hash(key)
@@ -167,6 +183,18 @@ class HashTable:
         hashed_key = self._naive_hash(key)
         bucket = self.buckets.get(hashed_key)
         return key in bucket
+
+    def __bool__(self):
+        return bool(self.buckets)
+
+    def __len__(self):
+        bucket_node = self.buckets.head
+        i = 0
+        while bucket_node:
+            bucket = bucket_node.value
+            i += len(bucket)
+            bucket_node = bucket_node.next
+        return i
 
     def __repr__(self):
         bucket_node = self.buckets.head
