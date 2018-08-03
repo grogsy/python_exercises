@@ -39,3 +39,7 @@ class Stack:
             output += '%s->' % value
             node = node.next
         return output
+
+    @property
+    def empty(self):
+        return self.count() == 0
