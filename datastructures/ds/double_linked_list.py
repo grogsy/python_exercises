@@ -26,7 +26,7 @@ class DoubleLinkedList:
 
     def pop(self):
         '''Remove current node at the tail and return its value'''
-        if not self.tail or not self.head:
+        if not self.tail and not self.head:
             return None
         res = self.tail.value
         self.tail = self.tail.prev
@@ -40,7 +40,7 @@ class DoubleLinkedList:
 
     def unshift(self):
         '''Remove current node at head and return its value'''
-        if not self.head or not self.tail:
+        if not self.head and not self.tail:
             return None
         res = self.head.value
         self.head = self.head.next

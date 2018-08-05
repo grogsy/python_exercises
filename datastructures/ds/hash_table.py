@@ -155,7 +155,7 @@ class HashTable:
         self.buckets = BucketList()
 
     def _naive_hash(self, key):
-        return sum(ord(c) for c in str(key)) % 7
+        return sum((ord(c)*7**i) for i, c in enumerate(str(key), 1)) % 257
 
     def __setitem__(self, key, value):
         hashed_key = self._naive_hash(key)
@@ -203,7 +203,7 @@ class HashTable:
             bucket = bucket_node.value
             node = bucket.head
             while node:
-                output += '{}: {}, '.format(repr(node.key), repr(node.value))
+                output += '%r: %r, '% (node.key, node.value)
                 node = node.next
             bucket_node = bucket_node.next
         output = output[:-2]
