@@ -1,22 +1,7 @@
 '''An attempt to replicate unix piping functionality
-requirements:
 
-            command piping should be read from left to right
-            an example would be something like:
-
-                cat .bash_history | sed <file_arg> <opts> | cut <opts> | sort <opts> | uniq
-
-            and this is what it would look like being run as a python program:
-
-                python pipe.py "cat .bash_history | sed <opts> | cut<opts> | sort <opts> | uniq
-
-            sometimes the leading command does not require a file but returns a text stream instead
-            we will need to handle this case, it could be something like the ls command:
-
-                python pipe.py "ls | sed <opts> | cut <opts> | sort <opts> | uniq
-
-            -keeping this in mind, we start by implementing functionality for one type of arg
-            and this will be a single text file to process across the pipe
+                example:
+                python pipe.py "ls | sed <opts> | cut <opts> | sort <opts> | uniq"
 '''
 import argparse
 import subprocess
