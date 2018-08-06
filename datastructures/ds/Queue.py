@@ -44,4 +44,4 @@ class Queue:
 
     @property
     def empty(self):
-        return self.count > 0
+        return self.count == 0
