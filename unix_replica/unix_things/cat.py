@@ -39,7 +39,7 @@ def run_as_echo(args):
 
 
 def run_with_files(args):
-    txt = [line.strip('\n') for f in args['files'] for line in open(f, 'r').readlines()]
+    txt = [line.strip('\n') for f in args['files'] for line in open(f)]
     if args['s']:
         txt = [line for line in txt if line]
     if args['E']:

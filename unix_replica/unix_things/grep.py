@@ -17,7 +17,7 @@ def parse_args():
 
 
 def main(args):
-    txt = [line.strip('\n') for f in args['files'] for line in open(f, 'r').readlines()]
+    txt = [line.strip('\n') for f in args['files'] for line in open(f)]
     if args['n']:
         ntmp = list(enumerate(txt, start=1))
         fmt = '{0:>{w}} {1}'
