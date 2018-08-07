@@ -1,4 +1,4 @@
-class SingleLinkedNode:
+class Node:
     '''Node'''
     def __init__(self, value, nxt):
         self.value = value
@@ -9,11 +9,18 @@ class SingleLinkedNode:
         next_val = self.next.value if self.next else None
         return f"[{self.value}:{repr(next_val)}]"
 
-class DoubleLinkedNode:
+    # Suppoer for iteration in controller structures
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.next
+
+
+class DoubleLinkedNode(Node):
     def __init__(self, value, prev, nxt):
-        self.value = value
+        super().__init__(value, nxt)
         self.prev = prev
-        self.next = nxt
 
     def __repr__(self):
         prev_val = self.prev.value if self.prev else None

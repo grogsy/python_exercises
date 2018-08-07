@@ -5,7 +5,7 @@ new implementation: first val<-2<-3<-4<-...<-n<-last val
 
 Rewrote single linked list
 '''
-from .node import SingleLinkedNode as Node
+from .node import Node
 
 class SingleLinkedList:
     '''Single-Linked-List'''
