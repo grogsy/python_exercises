@@ -192,7 +192,10 @@ class HashTable:
 
     def __contains__(self, key):
         hashed_key = self._naive_hash(key)
-        bucket = self.buckets.get(hashed_key)
+        try:
+            bucket = self.buckets.get(hashed_key)
+        except:
+            return False
         return key in bucket
 
     def __bool__(self):
