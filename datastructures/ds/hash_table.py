@@ -80,11 +80,6 @@ class LinkedList:
         return self.count > 0
 
 
-
-class BucketError(BaseException):
-    pass
-
-
 class BucketList(LinkedList):
     def _get_id(self, bucket_id):
         node = self.head
@@ -98,7 +93,7 @@ class BucketList(LinkedList):
     def get(self, bucket_id):
         bucket = self._get_id(bucket_id)
         if not bucket:
-            raise BucketError
+            raise NoBucket
         return bucket
 
 
@@ -124,7 +119,7 @@ class Bucket(LinkedList):
             if node.key == key:
                 return node.value
             node = node.next
-        raise KeyError
+        raise KeyError(key)
 
     def remove(self, key):
         node = self.head
@@ -150,9 +145,22 @@ class Bucket(LinkedList):
         return False
 
 
+class NoBucket(KeyError):
+    pass
+
+
 class HashTable:
     def __init__(self):
         self.buckets = BucketList()
+
+    def get(self, key, default=None):
+        hashed_key = self._naive_hash(key)
+        try:
+            bucket = self.buckets.get(hashed_key)
+            out = bucket.get(key)
+        except KeyError:
+            return default
+        return out
 
     def _naive_hash(self, key):
         return sum((ord(c)*7**i) for i, c in enumerate(str(key), 1)) % 257
@@ -164,14 +172,17 @@ class HashTable:
             if key in bucket:
                 bucket.remove(key)
             bucket.push(key, value)
-        except BucketError:
+        except NoBucket:
             new_bucket = Bucket(bucket_id=hashed_key)
             new_bucket.push(key, value)
             self.buckets.push(new_bucket)
 
     def __getitem__(self, key):
         hashed_key = self._naive_hash(key)
-        bucket = self.buckets.get(hashed_key)
+        try:
+            bucket = self.buckets.get(hashed_key)
+        except KeyError:
+            return "KeyError: %s" % key
         return bucket.get(key)
 
     def __delitem__(self, key):
