@@ -68,7 +68,7 @@ class LinkedList:
         return i
 
     # Implementing iterator for control structure makes coding and reading
-    # easier
+    # easier. Iterator also defined in the Node class
     def __iter__(self):
         node = self.head
         while node:
@@ -215,7 +215,6 @@ class HashTable:
         return bool(self.buckets)
 
     def __len__(self):
-        bucket_node = self.buckets.head
         i = 0
         for bucket_node in self.buckets:
             bucket = bucket_node.value
@@ -229,7 +228,6 @@ class HashTable:
                 yield node.key
 
     def __repr__(self):
-        bucket_node = self.buckets.head
         output = '{'
         for bucket_node in self.buckets:
             bucket = bucket_node.value
