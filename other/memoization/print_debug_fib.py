@@ -8,7 +8,7 @@ def memoize(f):
             memo[x] = f(x)
             input('memo[%d] set to %d,\n\n' % (x, memo[x]))
         else:
-            input('fib(%d) in memo already as memo[%d] = %d\n\n..' % (x, x, memo[x]))
+            input('fib(%d) in memo already as memo[%d] = %d..\n\n' % (x, x, memo[x]))
 
         return memo[x]
     return helper
@@ -25,9 +25,9 @@ def fib(n):
     else:
         input('Calculating fib(%d) + fib(%d),' % (n-1, n-2))
 
-        input('First calling fib(%d):\n\n' % (n-1))
+        input('First calculating fib(%d):\n\n' % (n-1))
         f1 = fib(n-1)
-        input('Calculating fib(%d) done. Back in fib(%d). Now calling fib(%d):\n\n' % (n-1, n, n-2))
+        input('Calculating fib(%d) done. Back in fib(%d). Now calculating fib(%d):\n\n' % (n-1, n, n-2))
 
         f2 = fib(n-2)
         input('Calculating fib(%d) done. Back in fib(%d) with fib(%d)=%d, and fib(%d)=%d. Therefore, fib(%d) + fib(%d) = %d.' % (n-2, n, n-1, f1, n-2, f2, n-1, n-2, f1+f2))
