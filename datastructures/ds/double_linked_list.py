@@ -55,21 +55,18 @@ class DoubleLinkedList:
     def remove(self, obj):
         '''Remove a node and return its index'''
         i = 0
-        current = self.head
-        while current:
-            if current.value == obj:
-                if current is self.head:
+        for node in self:
+            if node.value == obj:
+                if node is self.head:
                     self.unshift()
-                elif current is self.tail:
+                elif node is self.tail:
                     self.pop()
                 else:
-                    prev_node, next_node = current.prev, current.next
-                    # Link the two nodes next to current node together
+                    prev_node, next_node = node.prev, node.next
                     prev_node.next = next_node
                     next_node.prev = prev_node
                     self._count -= 1
                 return i
-            current = current.next
             i += 1
 
     def get(self, index):
@@ -85,14 +82,12 @@ class DoubleLinkedList:
         return current.value
         '''
         i = 0
-        current = self.head
         res = None
-        while current:
+        for node in self:
             if i == index:
-                res = current.value
+                res = node.value
                 break
             i += 1
-            current = current.next
         return res
 
 
@@ -116,15 +111,20 @@ class DoubleLinkedList:
         else:
             assert self.head.prev is None and self.tail.next is None
 
+    def __iter__(self):
+        node = self.head
+        while node:
+            yield node
+            node = next(node)
+        return
+
     def dump(self):
         '''Get list current state'''
         if self.count == 0:
             return None
 
         output = ''
-        current = self.head
-        while current:
-            output += repr(current)
-            current = current.next
+        for node in self:
+            output += repr(node)
 
         return output

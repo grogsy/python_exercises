@@ -42,16 +42,13 @@ class LinkedList:
             self._reset()
 
     def get(self, obj):
-        node = self.head
-        while node:
+        for node in self:
             if obj == node.value:
                 return node.value
-            node = node.next
         return None
 
     def remove(self, obj):
-        node = self.head
-        while node:
+        for node in self:
             if node.value == obj:
                 if node is self.head:
                     self.unshift()
@@ -61,17 +58,23 @@ class LinkedList:
                     prev_node, next_node = node.prev, node.next
                     prev_node.next, next_node.prev = next_node, prev_node
                 break
-            node = node.next
         return None
 
     @property
     def count(self):
-        node = self.head
         i = 0
-        while node:
+        for node in self:
             i += 1
-            node = node.next
         return i
+
+    # Implementing iterator for control structure makes coding and reading
+    # easier
+    def __iter__(self):
+        node = self.head
+        while node:
+            yield node
+            node = next(node)
+        return
 
     def __len__(self):
         return self.count
@@ -81,13 +84,12 @@ class LinkedList:
 
 
 class BucketList(LinkedList):
+    '''A linked-list that holds other linked-lists(buckets)'''
     def _get_id(self, bucket_id):
-        node = self.head
-        while node:
-            bucket = node.value
+        for bucket_node in self:
+            bucket = bucket_node.value
             if bucket.id == bucket_id:
                 return bucket
-            node = node.next
         return None
 
     def get(self, bucket_id):
@@ -114,16 +116,13 @@ class Bucket(LinkedList):
             self.tail.prev.next = self.tail
 
     def get(self, key):
-        node = self.head
-        while node:
+        for node in self:
             if node.key == key:
                 return node.value
-            node = node.next
         raise KeyError(key)
 
     def remove(self, key):
-        node = self.head
-        while node:
+        for node in self:
             if node.key == key:
                 if node is self.head:
                     self.unshift()
@@ -133,15 +132,12 @@ class Bucket(LinkedList):
                     prev_node, next_node = node.prev, node.next
                     prev_node.next, next_node.prev = next_node, prev_node
                 break
-            node = node.next
         return None
 
     def __contains__(self, key):
-        node = self.head
-        while node:
+        for node in self:
             if key == node.key:
                 return True
-            node = node.next
         return False
 
 
@@ -161,6 +157,20 @@ class HashTable:
         except KeyError:
             return default
         return out
+
+    def items(self):
+        for bucket_node in self.buckets:
+            bucket = bucket_node.value
+            for node in bucket:
+                yield (node.key, node.value)
+
+    def keys(self):
+        for key, _ in self.items():
+            yield key
+
+    def values(self):
+        for _, value in self.items():
+            yield value
 
     def _naive_hash(self, key):
         return sum((ord(c)*7**i) for i, c in enumerate(str(key), 1)) % 257
@@ -187,14 +197,17 @@ class HashTable:
 
     def __delitem__(self, key):
         hashed_key = self._naive_hash(key)
-        bucket = self.buckets.get(hashed_key)
+        try:
+            bucket = self.buckets.get(hashed_key)
+        except KeyError:
+            return "KeyError: %s" % key
         bucket.remove(key)
 
     def __contains__(self, key):
         hashed_key = self._naive_hash(key)
         try:
             bucket = self.buckets.get(hashed_key)
-        except:
+        except NoBucket:
             return False
         return key in bucket
 
@@ -204,23 +217,24 @@ class HashTable:
     def __len__(self):
         bucket_node = self.buckets.head
         i = 0
-        while bucket_node:
+        for bucket_node in self.buckets:
             bucket = bucket_node.value
             i += len(bucket)
-            bucket_node = bucket_node.next
         return i
+
+    def __iter__(self):
+        for bucket_node in self.buckets:
+            bucket = bucket_node.value
+            for node in bucket:
+                yield node.key
 
     def __repr__(self):
         bucket_node = self.buckets.head
         output = '{'
-        while bucket_node:
+        for bucket_node in self.buckets:
             bucket = bucket_node.value
-            node = bucket.head
-            while node:
-                output += '%r: %r, '% (node.key, node.value)
-                node = node.next
-            bucket_node = bucket_node.next
+            for node in bucket:
+                output += '%r: %r, ' % (node.key, node.value)
         output = output[:-2]
         output += '}'
         return output
-
