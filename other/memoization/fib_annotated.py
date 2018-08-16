@@ -6,9 +6,9 @@ def memoize(f):
             input('%d not in memo. Setting memo[%d] = fib(%d),' % (x, x, x))
             input('Calling fib(%d):\n\n' % x)
             memo[x] = f(x)
-            input('memo[%d] set to %d,\n\n' % (x, memo[x]))
+            input('memo[%d] set to %d, returning to fib(%d)\n\n' % (x, memo[x], x+1))
         else:
-            input('fib(%d) in memo already as memo[%d] = %d..\n\n' % (x, x, memo[x]))
+            input('fib(%d) in memo already as memo[%d] = %d.. returning to fib(%d)\n\n' % (x, x, memo[x], x+2))
 
         return memo[x]
     return helper
