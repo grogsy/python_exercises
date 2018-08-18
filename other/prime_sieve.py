@@ -8,9 +8,9 @@ def sieve(high):
             k = 0
             j = i**2 + (i*k)
             while j < high:
-                j = i**2 + (i*k)
                 table[j] = False
                 k += 1
+                j = i**2 + (i*k)
     return [num for num in table if table[num]]
 
 sieve(121)
