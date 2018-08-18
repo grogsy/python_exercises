@@ -10,17 +10,18 @@ def rps():
     print("You> %s || %s <Computer" % (player_choice, ai_choice))
 
     if player_choice == ai_choice:
-        print('tie')
+        print('tie\n')
     elif (player_choice, ai_choice) in (('rock', 'scissor'), ('scissor', 'paper'), ('paper', 'rock')):
-        print('you win')
+        print('you win\n')
     else:
-        print('you lose')
+        print('you lose\n')
 
 def play(rounds=1):
     for i in range(rounds):
         rps()
 
 if __name__ == '__main__':
+    print("\nRock paper scissors. Hit ctrl-c to exit\n\n")
     while True:
         try:
             play()
