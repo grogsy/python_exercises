@@ -1,4 +1,6 @@
 def sort(arr):
+    if arr.count == 1 or arr.count == 0:
+        return
     swapped = True
     while swapped:
         swapped = False
