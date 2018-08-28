@@ -1,4 +1,4 @@
-from ds.double_linked_list import DoubleLinkedList
+from structures.double_linked_list import DoubleLinkedList
 
 def test_push():
     colors = DoubleLinkedList()

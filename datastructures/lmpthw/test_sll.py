@@ -1,4 +1,4 @@
-from ds.single_linked_list import SingleLinkedList
+from structures.single_linked_list import SingleLinkedList
 
 def test_push():
     colors = SingleLinkedList()

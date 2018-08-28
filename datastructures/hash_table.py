@@ -1,5 +1,5 @@
 '''Python hash table that acts like built-in dict using only linked lists'''
-from .node import DoubleLinkedNode as Node
+from node import DoubleLinkedNode as Node
 
 class HashNode(Node):
     def __init__(self, key, **kwargs):
