@@ -1,4 +1,4 @@
-from structures.double_linked_list import DoubleLinkedList
+from pkg.structures.double_linked_list import DoubleLinkedList
 
 def test_push():
     colors = DoubleLinkedList()

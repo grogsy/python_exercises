@@ -1,5 +1,5 @@
 def sort(arr):
-    if len(arr) == 0 or len(arr) == 1:
+    if len(arr) <= 1:
         return arr
     elif len(arr) == 2:
         if arr[0] > arr[1]:

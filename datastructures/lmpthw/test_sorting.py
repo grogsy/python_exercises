@@ -1,15 +1,16 @@
 from random import choice
-from structures.double_linked_list import DoubleLinkedList as Array
+from pkg.structures.double_linked_list import DoubleLinkedList as Array
 
-
+# Try to make all the sorting functions return a new object
+# instead of modifying the existing one
 def test_sort(sort_func):
     for _ in range(10):
         length = choice(range(10, 100))
         arr = Array()
         for _ in range(length):
             arr.push(choice(range(10000)))
-        sort_func(arr)
-        for node in arr:
+        sorted_arr = sort_func(arr)
+        for node in sorted_arr:
             nxt  = node.next
             prev = node.prev
             try:
@@ -25,7 +26,13 @@ def test_sort(sort_func):
 
 
 def test_bubblesort():
-    from sorts.bubblesort import sort
+    from pkg.sorts.bubblesort import sort
     test_sort(sort)
 
+
+def test_mergesort():
+    from pkg.sorts.merge_sort import merge_sort
+    test_sort(merge_sort)
+
 test_bubblesort()
+test_mergesort()

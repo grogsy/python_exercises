@@ -1,7 +1,10 @@
 '''Bubblesort'''
-def sort(arr):
-    if arr.count == 1 or arr.count == 0:
-        return
+def sort(array):
+    '''Return the sorted linked list?'''
+    arr = array
+
+    if arr.count <= 1:
+        return arr
     swapped = True
     while swapped:
         swapped = False
@@ -14,3 +17,5 @@ def sort(arr):
             except (TypeError, AttributeError):
                 # The case of the head as it does not have a previous value to compare
                 pass
+
+    return arr
