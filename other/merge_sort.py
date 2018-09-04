@@ -18,4 +18,4 @@ def sort(arr):
             else:
                 equal.append(item)
 
-    return sort(lower)+sort(equal)+sort(higher)
+    return sort(lower)+equal+sort(higher)

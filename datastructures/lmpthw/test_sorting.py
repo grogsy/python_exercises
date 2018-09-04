@@ -30,9 +30,30 @@ def test_bubblesort():
     test_sort(sort)
 
 
+def test_bubblesort2():
+    from pkg.sorts.bubblesort2 import sort
+    test_sort(sort)
+
+
 def test_mergesort():
     from pkg.sorts.merge_sort import merge_sort
     test_sort(merge_sort)
 
+def test_quicksort():
+    from pkg.sorts.quicksort import quicksort
+    test_sort(quicksort)
+
+def test_quicksort2():
+    from pkg.sorts.hoare_quicksort import quicksort
+    test_sort(quicksort)
+
+def test_insertion_sort():
+    from pkg.sorts.insertion_sort import insertion_sort
+    test_sort(insertion_sort)
+
 test_bubblesort()
+test_bubblesort2()
 test_mergesort()
+test_quicksort()
+test_quicksort2()
+test_insertion_sort()

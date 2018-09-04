@@ -1,8 +1,8 @@
 '''Bubblesort on a DoubleLinkedList but without taking advantage of __iter__ method I provided'''
 
-def sort(array):
+def sort(arr):
     '''bubble sort'''
-    arr = array
+    
     if arr.count <= 1:
         return arr
 

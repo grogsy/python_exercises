@@ -42,7 +42,7 @@ def merge_sort(arr):
 def _merge_sort(arr):
     if arr.count <= 1:
         q = Queue()
-        q.shift(arr.head.value)
+        q.shift(arr.unshift())
 
         return q
 
