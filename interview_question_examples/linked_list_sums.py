@@ -3,118 +3,78 @@
                  return value cannot be a linked list
                  solve by recursion
 '''
-def add(s1, s2, carry=False):
-    '''
-    input s1 --> Node (linked list head)
-    input s2 --> Node (linked list head)
+class Node:
+    def __init__(self, value, nxt=None):
+        self.value = value
+        self.next = nxt
 
-    returns -->  Node pointing to other nodes containing magnitudinal sums
-    '''
-    node1 = s1
-    node2 = s2
+    def __repr__(self):
+        node = self
+        res = ''
 
+        while node:
+            res += str(node.value)
+            node = node.next
+
+        return res
+
+
+def recursive_add(n1, n2):
+    if not n1.next and not n2.next:
+        carry, _sum = divmod(n1.value + n2.value, 10)
+        return carry, Node(_sum)
+
+    carry, node = recursive_add(n1.next, n2.next)
+
+    carry, _sum = divmod(n1.value + n2.value + carry, 10)
+
+    return carry, Node(_sum, node)
+
+
+def add(n1, n2):
     i = j = 0
-
-    # Scan nodes to check if they're the same length or not
+    node1 = n1
+    node2 = n2
+    # Calculate length diff
     while node1:
-        node1 = node1.next
         i += 1
-
+        node1 = node1.next
     while node2:
-        node2 = node2.next
         j += 1
+        node2 = node2.next
 
-    # Calculate difference in length
     diff = abs(i-j)
-
-    if diff == 0:
-        # Same length, just recursive add and return early
-        carry, node = recursive_add(s1, s2)
+    if not diff:
+        carry, node = recursive_add(n1, n2)
         if carry:
-            node.prev = Node(1, prev=None, nxt=node)
-            node = node.prev
-        return node
+            node = Node(1, node)
+            return node
 
-    # Find which node is longer
     if i > j:
-        greater = s1
-        lesser  = s2
+        greater = n1
+        lesser  = n2
     else:
-        greater = s2
-        lesser  = s1
+        greater = n2
+        lesser  = n1
 
-    k = 0
-    # Copy longer node into a new Node until greater and lesser are same length(isn't this 'using explicit space' though? lol)
-    greater_node = Node(greater.value, prev=None, nxt=None)
-    greater      = greater.next
-    k += 1
-
+    # add a buffer of 0's until lengths match up
+    # Ex. 999 --->  999
+    #      +1 ---> +001
+    k = 1
+    head = Node(0)
+    n = head
     while k < diff:
-        greater_node.next = Node(greater.value, prev=greater_node, nxt=None)
-        greater           = greater.next
-        greater_node      = greater_node.next
-        k += 1
-    # End copying
+        k+=1
+        n.next = Node(0)
+        n = n.next
 
+    n.next = lesser
+    lesser = head
 
-
-    # Then recursive add
     carry, node = recursive_add(greater, lesser)
 
-    # Link the greater node and the node carrying the recursive add
-    greater_node.next = node
-    node.prev         = greater
+    if carry:
+     node = Node(1, node)
 
-    carry, greater_node.value = divmod(greater.value+carry, 10)
-
-    # Prepare the output node
-    out_node = greater_node
-
-    previous = greater_node.prev
-    while previous and carry:
-        # Performed for continuous carrying
-        carry, previous.value = divmod(previous.value+carry, 10)
-
-        out_node = previous
-        previous = previous.prev
-
-    if carry and not previous:
-        out_node = Node(1, prev=None, nxt=out_node)
-    elif previous and not carry:
-        while previous:
-            out_node = previous
-            previous = previous.prev
-
-    return out_node
-
-
-def recursive_add(s1, s2):
-    '''works when s1 and s2 are of same length'''
-    if not s1.next and not s2.next:
-        carry, s =  divmod(s1.value+s2.value, 10)
-        return carry, Node(s, prev=None, nxt=None)
-
-    carry, node = recursive_add(s1.next, s2.next)
-
-    c, s = divmod(s1.value+s2.value, 10)
-
-    s += carry
-
-    prev_node = Node(s, prev=None, nxt=node)
-    node.prev = prev_node
-
-    return c, prev_node
-
-
-def print_values(c):
-    while c:
-        print(c.value)
-        c = c.next
-
-
-class Node:
-    def __init__(self, value, prev=None, nxt=None):
-        self.value = value
-        self.prev = prev
-        self.next = nxt
+    return node
 
