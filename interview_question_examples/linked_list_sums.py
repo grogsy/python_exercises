@@ -48,7 +48,7 @@ def add(n1, n2):
         carry, node = recursive_add(n1, n2)
         if carry:
             node = Node(1, node)
-            return node
+        return node
 
     if i > j:
         greater = n1
