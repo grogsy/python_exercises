@@ -19,6 +19,11 @@ class FileOwners:
                 res[owner] = [file]
             else:
                 res[owner].append(file)
+            # As a try/except clause
+            #try:
+            #   res[owner].append(file)
+            #except KeyError:
+            #   res[owner] = [file]
         return res
 
 files = {
