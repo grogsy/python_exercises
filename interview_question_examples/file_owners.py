@@ -29,7 +29,7 @@ class FileOwners:
 # Dunno if this solution is any better than the other two up there but its different
 # Either way a defaultdict seems appropriate for this problem too
 def group_by_owners(files):
-    res = {name: [] for name in set(files.values())}
+    res = {owner: [] for owner in set(files.values())}
     for file in files:
         res[files.get(file)].append(file)
 
