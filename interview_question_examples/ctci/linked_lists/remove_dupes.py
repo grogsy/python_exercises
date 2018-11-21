@@ -14,3 +14,15 @@ def delete_dupes(node):
             prev = node
         
         node = node.next
+
+arr = [3, 2, 2, 2, 3, 1, 3, 1, 2 , 3]
+head = Node(1)
+
+for n in arr:
+    head.append(n)
+
+print_nodes(head)
+
+delete_dupes(head)
+
+print_nodes(head)
