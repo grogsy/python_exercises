@@ -22,6 +22,7 @@ class BinarySearchTree:
         node = root
         found = False
      
+        # No mo' nodes   
         if node is None:
             return False
         
