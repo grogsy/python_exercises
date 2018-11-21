@@ -21,7 +21,11 @@ class BinarySearchTree:
     def contains(root, value):
         node = root
         found = False
-        if value == node.value: # Why would this throw an attribute error?
+     
+        if node is None:
+            return False
+        
+        if value == node.value:
             return True
         if value < node.value:
             found = BinarySearchTree.contains(node.left, value)
