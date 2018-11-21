@@ -14,6 +14,17 @@ def delete_dupes(node):
             prev = node
         
         node = node.next
+        
+def delete_dupes2(node):
+    '''Without a buffer, using a leading node instead'''
+    while node.next is not None:
+        runner = node
+        while runner.next is not None:
+            if runner.next.data == node.data:
+                runner.next = runner.next.next
+            else:
+                runner = runner.next
+        node = node.next
 
 arr = [3, 2, 2, 2, 3, 1, 3, 1, 2 , 3]
 head = Node(1)
