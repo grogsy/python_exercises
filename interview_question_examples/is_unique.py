@@ -6,3 +6,4 @@ def is_unique(string):
         for j in range(i+1, len(string)):
             if c == string[j]:
                 return False
+    return True
