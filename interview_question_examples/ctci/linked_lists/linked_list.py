@@ -58,6 +58,6 @@ def print_nodes(node):
         out += fmt % curr.data
         curr = curr.next
     
-    out += fmt % curr.data
+    out += '%d' % curr.data
     
     return out
