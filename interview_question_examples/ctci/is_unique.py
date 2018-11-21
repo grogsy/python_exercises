@@ -6,4 +6,12 @@ def is_unique(string):
         for j in range(i+1, len(string)):
             if c == string[j]:
                 return False
+            
+    return True
+
+# alternatively, built-ins!:
+def is_unique2(string):
+    for char in set(c for c in string):
+       if string.count(char) > 1:
+           return False
     return True
