@@ -20,20 +20,17 @@ class BinarySearchTree:
     @staticmethod
     def contains(root, value):
         node = root
-        found = False
      
         # No mo' nodes   
         if node is None:
             return False
-        
-        if value == node.value:
+        elif value == node.value:
             return True
-        if value < node.value:
-            found = BinarySearchTree.contains(node.left, value)
+        elif value < node.value:
+            return BinarySearchTree.contains(node.left, value)
         elif value > node.value:
-            found = BinarySearchTree.contains(node.right, value)
-        
-        return found
+            return BinarySearchTree.contains(node.right, value)
+
 
 
 n1 = BinarySearchTree.Node(value=1, left=None, right=None)
