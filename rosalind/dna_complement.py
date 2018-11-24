@@ -17,4 +17,4 @@ data = 'AAAACCCGGT'
 comps = {k: v for k, v in zip('ATCG', 'TACG')}
 
 def complement(string):
-    return ''.join(reversed([comps[c] for c in data]))
+    return ''.join(reversed([comps[c] for c in string]))
