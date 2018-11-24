@@ -1,5 +1,5 @@
 class Node:
-    '''Implementation without a linked list controller'''
+    '''Implementation without a linked list controller nor an indicator for the head and tail'''
     def __init__(self, data):
         self.data = data
         self.next = None
@@ -46,3 +46,18 @@ class Node:
     def __repr__(self):
         next_val = self.next.data if self.next else None
         return "Node<data:{0} next:{1}>".format(self.data, next_val)
+    
+   
+def print_nodes(node):
+    '''Print out all nodes in the list'''
+    fmt = '%d->'
+    out = ''
+    
+    curr = node
+    while curr.next is not None:
+        out += fmt % curr.data
+        curr = curr.next
+    
+    out += '%d' % curr.data
+    
+    return out
