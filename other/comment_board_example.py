@@ -42,4 +42,12 @@ f = Comment(baa, 'This is a reply to toplevel comment')
 g = Comment(foo, 'This is a reply to comment f')
 h = Comment(baa, 'This is a reply to comment g')
 
+a.replies.append(b)
+a.replies.append(e)
+a.replies.append(f)
+b.replies.append(c)
+b.replies.append(d)
+f.replies.append(g)
+g.replies.append(h)
+
 generate_comment_thread_tree(a)
