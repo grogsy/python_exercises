@@ -1,4 +1,21 @@
-'''Jotting bare idea for how to implement a commenting system'''
+'''Jotting bare idea for how to implement a commenting system
+>>> generate_comment_thread_tree(a, 0)
+ foo says: this is a toplevel comment
+
+---- bar says: this is a reply to toplevel comment
+
+-------- foo says: this is a reply to comment b
+
+-------- baz says: This is a reply to comment b
+
+---- fooz says: This is a reply to toplevel comment
+
+---- baa says: This is a reply to toplevel comment
+
+-------- foo says: This is a reply to comment f
+
+------------ baa says: This is a reply to comment g
+'''
 
 class Comment:
     def __init__(self, user, text):
