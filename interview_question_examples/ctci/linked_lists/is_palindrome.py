@@ -13,7 +13,7 @@ def is_palindrome(node):
     j = node.count()
     
     # with this, it should work for either even or odd numbered strings
-    while i < j or i != j:
+    while i < j and i != j:
         # compare the data at each seeking node
         if left.data != right.data:
             return False
