@@ -13,6 +13,19 @@ def sieve(high):
                 j = i**2 + (i*k)
     return [num for num in table if table[num]]
 
+
+# This works(faster?) too
+def sieve2(n):
+    table = {i: True for i in range(2, n)}
+    
+    for i in range(2, n):
+        if table[i]:
+            for j in range(2, n+1):
+                if i * j > len(table):
+                    break
+                table[i * j] = False
+            
+
 if __name__ == '__main__':
     import sys
     print(sieve(int(sys.argv[1])))
