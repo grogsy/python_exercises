@@ -24,6 +24,8 @@ def sieve2(n):
                 if i * j > len(table):
                     break
                 table[i * j] = False
+
+    return [num for num in table if table[num]]
             
 
 if __name__ == '__main__':
