@@ -7,7 +7,10 @@ class PaginationContext:
         self.current_index = 1 
         
     def make_chunks(self, iterable, size):
-        return [iterable[x:x+size] for x in range(0, len(iterable), size)]
+        if isinstance(iterable, list):
+            return [iterable[x:x+size] for x in range(0, len(iterable), size)]
+        else:
+            raise TypeError("{} not supported".format(str(type(iterable))))
     
     @property
     def current(self):
@@ -27,21 +30,22 @@ class PaginationContext:
     @property
     def next_num(self):
         if not self.has_next:
-            return "No next number"
+            return -1
         return self.current_index + 1
     
     @property
     def prev_num(self):
         if not self.has_prev:
-            return "Already at 1"
+            return -1
         return self.current_index - 1
     
-    # maybe don't use this yet
-    def get(self):
-        if self.current_index >= self.max_size or self.current_index < 1:
-            return []
+    def get(self, page=None):
+        if page is not None and (page >= 1 or page <= self.max_size):
+            return self.iterable[page - 1]
+        elif page is None and (self.current_index >= 1 or self.current_index <= self.max_size):
+            return self.iterable[self.current_index - 1]
         else:
-            return self.iterable[self.current_index-1]
+            return []
         
     def get_next(self):
         if not self.has_next:
