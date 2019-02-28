@@ -46,17 +46,16 @@ class PaginationContext:
     def get_next(self):
         if not self.has_next:
             return []
-        res = self.iterable[self.next_num]
+        res = self.iterable[self.next_num - 1]
         self.current_index += 1
         return res
     
     def get_prev(self):
         if not self.has_prev:
             return []
-        res = self.iterable[self.prev_num]
+        res = self.iterable[self.prev_num - 1]
         self.current_index -= 1
         return res
     
     def __repr__(self):
         return str(self.iterable[self.current_index - 1])
-
