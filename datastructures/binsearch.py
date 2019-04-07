@@ -1,7 +1,7 @@
 import random
 
 def binsearch(arr, target):
-    return _binsearch(0, len(arr), target)
+    return _binsearch(0, len(arr), arr, target)
 
 def _binsearch(start, end, arr, target):
 
