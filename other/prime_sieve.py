@@ -14,14 +14,13 @@ def sieve(high):
     return [num for num in table if table[num]]
 
 
-# This works(faster?) too
 def sieve2(n):
     table = {i: True for i in range(2, n)}
     
     for i in range(2, n):
         if table[i]:
             for j in range(2, n+1):
-                if i * j > len(table):
+                if i * j not in table:
                     break
                 table[i * j] = False
 
@@ -30,4 +29,5 @@ def sieve2(n):
 
 if __name__ == '__main__':
     import sys
-    print(sieve(int(sys.argv[1])))
+    from pprint import pprint
+    pprint(sieve2(int(sys.argv[1])))
