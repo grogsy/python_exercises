@@ -9,7 +9,7 @@ def secret_people(people_list, secret):
     
 ppl = 'me you them'.split(' ')
 
-secret_list = secret(ppl, 512)
+secret_list = secret_people(ppl, 512)
 
 # every item is a function object
 print(secret_list)
