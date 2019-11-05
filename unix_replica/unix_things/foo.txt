@@ -1,0 +1,7 @@
+this is a text file
+this is some text
+
+foo
+bar
+
+there is text right here
