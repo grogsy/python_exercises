@@ -16,7 +16,7 @@ class MoveTracker:
         
         moves = MoveTracker.remove_bad_moves(self.location, this_move)
 
-        for move in MOVES:
+        for move in moves:
             self.moves.append(move)
             
     @staticmethod
