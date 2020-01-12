@@ -7,8 +7,6 @@ class MoveTracker:
         self.num_moves = 0
         
     def get_next_moves(self):
-        MOVES = {-15, 15, -17, 17, -6, 6, -10, 10}
-        
         this_move = self.moves.pop(0)
         self.num_moves += 1
         
