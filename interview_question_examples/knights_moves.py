@@ -1,3 +1,5 @@
+# solve for a board whose tiles are annotated 1..64
+
 class MoveTracker:
     def __init__(self, start, first_move):
         self.location = start
@@ -13,9 +15,7 @@ class MoveTracker:
         self.location += this_move
         
         moves = MoveTracker.remove_bad_moves(self.location, this_move)
-        
-        #...
-        
+
         for move in MOVES:
             self.moves.append(move)
             
