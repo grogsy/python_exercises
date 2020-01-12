@@ -33,9 +33,9 @@ class MoveTracker:
         return MOVES
 
 def minJumps(src, dest):
-    MOVES = MoveTracker.remove_bad_moves(src)
+    initial_moves = MoveTracker.remove_bad_moves(src)
     
-    states = [MoveTracker(src, move) for move in moves]
+    states = [MoveTracker(src, move) for move in initial_moves]
     
     for s in states:
         s.get_next_moves()
