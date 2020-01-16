@@ -6,12 +6,13 @@ def get_set(paragraph):
     paragraph_size = len(paragraph)
     max_frequency = max(counter.values())
     frequency_count = 1
-    while frequency_count < max_frequency:
+    done = False
+    while not done and frequency_count < max_frequency:
         next_letters = [letter for letter in counter if counter[letter] == frequency_count]
         for letter in next_letters:
             paragraph_size -= frequency_count
             if paragraph_size < 50:
-                break
+                done = True
             output.append(letter)
         
         frequency_count += 1
