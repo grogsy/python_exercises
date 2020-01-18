@@ -15,16 +15,16 @@ def dfs(node, digitArr, currentDigit):
     return digitArr
     
 def sumRootToLeaf(root):
-        if not root.left and not root.right:
-            return root.val
-        
-        numsLeft = []
-        numsRight = []
-        
-        if root.left:
-            numsLeft = dfs(root.left, digitArr=numsLeft, currentDigit=str(root.val))
-        if root.right:
-            numsRight = dfs(root.right, digitArr=numsRight, currentDigit=str(root.val))
-        
-            
-        return sum(int(binaryNum, 2) for binaryNum in chain(numsLeft, numsRight))
+    if not root.left and not root.right:
+        return root.val
+
+    numsLeft = []
+    numsRight = []
+
+    if root.left:
+        numsLeft = dfs(root.left, digitArr=numsLeft, currentDigit=str(root.val))
+    if root.right:
+        numsRight = dfs(root.right, digitArr=numsRight, currentDigit=str(root.val))
+
+
+    return sum(int(binaryNum, 2) for binaryNum in chain(numsLeft, numsRight))
