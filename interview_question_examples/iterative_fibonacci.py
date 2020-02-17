@@ -1,8 +1,9 @@
-def fib(n):
-    prev = 0
-    s = 1
-    
-    for _ in range(n):
-        s += prev
-        prev = s - prev
-        print(s)
+def fib(N):
+    prev = 1
+    accumulation = 0
+
+    for _ in range(1, N + 1):
+        accumulation += prev
+        prev = accumulation - prev
+
+    return accumulation
