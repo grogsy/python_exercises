@@ -53,3 +53,19 @@ class Dijkstra:
         
             
         return '->'.join(reversed(output))
+    
+# https://imgur.com/a/iOEy2LP
+g = Graph()
+g.add_node('start', 'a', 2)
+g.add_node('start', 'b', 5)
+g.add_node('a', 'd', 7)
+g.add_node('a', 'b', 8)
+g.add_node('b', 'd', 2)
+g.add_node('b', 'c', 4)
+g.add_node('c', 'd', 6)
+g.add_node('c', 'fin', 3)
+g.add_node('d', 'fin', 1)
+
+d = Dijkstra(g)
+d()
+# should return 'start->b->d->fin'
