@@ -30,7 +30,7 @@ class Dijkstra:
     
     def find_lowest_cost(self):
         try:
-            return min(cost for cost in self.costs if cost not in self.processed)
+            return min((cost for cost in self.costs if cost not in self.processed), key=lambda k: self.costs[k])
         except:
             return None
     
